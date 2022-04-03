@@ -7,9 +7,9 @@
     <color name="teal_700">#FF018786</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
-    <!--Colores de temas (Claro)-->
-    <color name="fondo">#F3F3F3</color>
-    <color name="fondo_nota">#D6D6D6</color>
-    <color name="barra">#F3EEEE</color>
-    <color name="icono">#686868</color>
+    <!--Colores de temas (Oscuro)-->
+    <color name="fondo">#2B2B2B</color>
+    <color name="fondo_nota">#494949</color>
+    <color name="barra">#3C3C3C</color>
+    <color name="icono">#A6A6A6</color>
 </resources>

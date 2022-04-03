@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">NotaPlus</string>
+    <string name="mis_notas">Mis Notas</string>
+    <string name="anadir_lista">Añadir lista</string>
+    <string name="anadir_imagen">Añadir imagen</string>
+    <string name="anadir_enlace">Añadir enlace</string>
+    <string name="anadir_nota">Añadir_nota</string>
+    <string name="tituloNota">Título</string>
+    <string name="nota">Nota</string>
 </resources>
