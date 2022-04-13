@@ -8,8 +8,13 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!--Colores de temas (Claro)-->
-    <color name="fondo">#F3F3F3</color>
-    <color name="fondo_nota">#D6D6D6</color>
-    <color name="barra">#F3EEEE</color>
-    <color name="icono">#686868</color>
+    <color name="fondo">#EFEFEF</color>
+    <color name="fondo_nota">#D8D8D8</color>
+    <color name="enfasis">#DFDFDF</color>
+    <color name="icono">#737272</color>
+    <!--Colores de notas-->
+    <color name="azul">#00C4FF</color>
+    <color name="rojo">#F10606</color>
+    <color name="naranja">#F36C05</color>
+    <color name="amarillo">#F3F305</color>
 </resources>

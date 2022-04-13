@@ -1,87 +1,131 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo"
-    tools:context=".actividades.MainActivity">
+    android:fitsSystemWindows="true">
 
-    <TextView
-        android:id="@+id/tituloAplicacion"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginStart="14dp"
-        android:layout_marginTop="16dp"
-        android:layout_marginEnd="14dp"
-        android:text="@string/mis_notas"
-        android:textSize="28sp"
-        android:fontFamily="sans-serif-black"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
-    <LinearLayout
-        android:id="@+id/barraDeAcciones"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center_vertical"
-        android:orientation="horizontal"
-        android:padding="16dp"
-        android:background="@color/barra"
-        app:layout_constraintBottom_toBottomOf="parent">
-
-        <ImageView
-            android:id="@+id/añadirLista"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:background="@drawable/ic_checkbox"
-            android:backgroundTint="@color/icono"
-            android:contentDescription="@string/anadir_lista" />
-
-        <ImageView
-            android:id="@+id/añadirImagen"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="14dp"
-            android:background="@drawable/ic_imagen"
-            android:backgroundTint="@color/icono"
-            android:contentDescription="@string/anadir_imagen" />
-
-        <ImageView
-            android:id="@+id/añadirURL"
-            android:layout_width="36dp"
-            android:layout_height="36dp"
-            android:layout_marginStart="14dp"
-            android:background="@drawable/ic_url"
-            android:backgroundTint="@color/icono"
-            android:contentDescription="@string/anadir_enlace" />
-
-    </LinearLayout>
-
-    <androidx.recyclerview.widget.RecyclerView
-        android:id="@+id/recyclerViewNotas"
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_marginTop="20dp"
-        app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloAplicacion" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/añadirNota"
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/NavigationView"
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:clickable="true"
-        android:contentDescription="@string/anadir_nota"
-        app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.96"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/tituloAplicacion"
-        app:layout_constraintVertical_bias="0.972"
-        app:maxImageSize="@android:dimen/app_icon_size"
-        app:srcCompat="@android:drawable/ic_input_add" />
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/plantilla_encabezado"
+        app:menu="@menu/menu">
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+    </com.google.android.material.navigation.NavigationView>
+
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        xmlns:tools="http://schemas.android.com/tools"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/fondo"
+        tools:context=".actividades.MainActivity">
+
+        <TextView
+            android:id="@+id/tituloAplicacion"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="14dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="14dp"
+            android:fontFamily="@font/roboto_bold"
+            android:text="@string/mis_notas"
+            android:textSize="28sp"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ImageView
+            android:id="@+id/iconoModo"
+            android:layout_width="45dp"
+            android:layout_height="45dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginEnd="10dp"
+            android:contentDescription="@string/modo"
+            android:src="@drawable/ic_claro"
+            app:layout_constraintEnd_toStartOf="@+id/cambiarModo"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <androidx.appcompat.widget.SwitchCompat
+            android:id="@+id/cambiarModo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:layout_marginEnd="10dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.905"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <!--Todavía sin funcionalidad-->
+        <LinearLayout
+            android:id="@+id/barraDeAcciones"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/enfasis"
+            android:gravity="center_vertical"
+            android:orientation="horizontal"
+            android:padding="16dp"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent">
+
+            <ImageView
+                android:id="@+id/añadirLista"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:background="@drawable/ic_checkbox"
+                android:backgroundTint="@color/icono"
+                android:contentDescription="@string/anadir_lista" />
+
+            <ImageView
+                android:id="@+id/añadirImagen"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="14dp"
+                android:background="@drawable/ic_imagen"
+                android:backgroundTint="@color/icono"
+                android:contentDescription="@string/anadir_imagen" />
+
+            <ImageView
+                android:id="@+id/añadirURL"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="14dp"
+                android:background="@drawable/ic_url"
+                android:backgroundTint="@color/icono"
+                android:contentDescription="@string/anadir_enlace" />
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recyclerViewNotas"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_marginTop="20dp"
+            app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tituloAplicacion" />
+
+        <com.google.android.material.floatingactionbutton.FloatingActionButton
+            android:id="@+id/añadirNota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:clickable="true"
+            android:contentDescription="@string/anadir_nota"
+            app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.96"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/tituloAplicacion"
+            app:layout_constraintVertical_bias="0.972"
+            app:maxImageSize="@android:dimen/app_icon_size"
+            app:srcCompat="@android:drawable/ic_input_add" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+</androidx.drawerlayout.widget.DrawerLayout>

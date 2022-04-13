@@ -3,13 +3,17 @@ package com.example.notaplus.actividades;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
+import androidx.appcompat.widget.SwitchCompat;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.annotation.SuppressLint;
+import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.util.Log;
+import android.widget.ImageView;
 
 import com.example.notaplus.R;
 import com.example.notaplus.adaptadores.AdaptadorNotas;
@@ -21,34 +25,43 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Activity principal. Desde aquí se visualizan las notas creadas
+ * Activity principal. Desde aquí se visualizan las notas guardadas
  *
  * @author Julio José Meijueiro Dacosta
  * @version 1.0
  */
 public class MainActivity extends AppCompatActivity {
 
-    /**
-     * RequestCode para <i>CrearNotaActivity</i>
-     */
     private static final int ANADIR_NOTA = 1;
-
-    private RecyclerView recyclerViewNotas;
+    @SuppressLint("StaticFieldLeak")
+    public static Context contexto;
+    SharedPreferences sharedPreferences = null;
     private List<Nota> listaNotas;
+    private RecyclerView recyclerViewNotas;
     private AdaptadorNotas adaptadorNotas;
+    private SwitchCompat switchModo;
+    private ImageView iconoModo;
 
+    /**
+     * Se ejecuta cuando se inicia la actividad.
+     *
+     * @param savedInstanceState Estado de la instancia guardada
+     */
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        contexto = getApplicationContext();
 
+        // Elegir temas
+        CambiarModo();
+
+        // Abrir "CrearNotaActivity"
         AbrirCrearNota();
+
+        // Carga las notas en pantalla
         CargarRecycler();
         GetNotas();
-
-        // SeleccionarTema. Más adelante será una opción en la aplicación
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-        // AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
     }
 
     /**
@@ -67,7 +80,7 @@ public class MainActivity extends AppCompatActivity {
     private void CargarRecycler() {
         recyclerViewNotas = findViewById(R.id.recyclerViewNotas);
         recyclerViewNotas.setLayoutManager(
-                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
 
         listaNotas = new ArrayList<>();
         adaptadorNotas = new AdaptadorNotas(listaNotas);
@@ -75,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     /**
-     * Devuelve las notas de la base de datos para mostralos en pantalla
+     * Devuelve las notas de la base de datos para mostrarlas en pantalla
      */
     private void GetNotas() {
         // Hilo secundario, ya que no se permiten operaciones de bases de datos en el hilo principal
@@ -86,6 +99,7 @@ public class MainActivity extends AppCompatActivity {
                 return BaseDeDatos.getBaseDeDatos(getApplicationContext()).dao_nota().getAll();
             }
 
+            @SuppressLint("NotifyDataSetChanged")
             @Override
             protected void onPostExecute(List<Nota> notas) {
                 super.onPostExecute(notas);
@@ -104,6 +118,43 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         new TareaGetNotas().execute();
+    }
+
+    /**
+     * Detecta el tema del dispositivo y permite cambiarlo mediante un <i>switch</i>.
+     *
+     * Los temas alternan entre <b>"Claro"</b> y <b>"Oscuro"</b>.
+     */
+    private void CambiarModo() {
+        switchModo = findViewById(R.id.cambiarModo);
+        iconoModo = findViewById(R.id.iconoModo);
+
+        sharedPreferences = getSharedPreferences("night", 0);
+        boolean modoOscuro = sharedPreferences.getBoolean("modo_oscuro", true);
+
+        if (modoOscuro) {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+            switchModo.setChecked(true);
+            iconoModo.setImageResource(R.drawable.ic_oscuro);
+        }
+
+        switchModo.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                switchModo.setChecked(true);
+                iconoModo.setImageResource(R.drawable.ic_oscuro);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("modo_oscuro", true);
+                editor.apply();
+            } else {
+                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                switchModo.setChecked(false);
+                iconoModo.setImageResource(R.drawable.ic_claro);
+                SharedPreferences.Editor editor = sharedPreferences.edit();
+                editor.putBoolean("modo_oscuro", false);
+                editor.apply();
+            }
+        });
     }
 
     /**

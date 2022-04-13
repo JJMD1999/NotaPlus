@@ -7,4 +7,10 @@
     <string name="anadir_nota">Añadir_nota</string>
     <string name="tituloNota">Título</string>
     <string name="nota">Nota</string>
+    <string name="edicion">Edición</string>
+    <string name="colores">Colores</string>
+    <string name="modo">Modo</string>
+    <string name="notas">Notas</string>
+    <string name="archivo">Archivo</string>
+    <string name="papelera">Papelera</string>
 </resources>

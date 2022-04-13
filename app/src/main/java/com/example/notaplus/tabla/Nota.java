@@ -34,6 +34,9 @@ public class Nota implements Serializable {
     @ColumnInfo(name = "color")
     private String color;
 
+    @ColumnInfo(name = "etiqueta")
+    private String etiqueta;
+
     public int getId() {
         return id;
     }
@@ -88,6 +91,14 @@ public class Nota implements Serializable {
 
     public void setColor(String color) {
         this.color = color;
+    }
+
+    public String getEtiqueta() {
+        return etiqueta;
+    }
+
+    public void setEtiqueta(String etiqueta) {
+        this.etiqueta = etiqueta;
     }
 
     @NonNull
