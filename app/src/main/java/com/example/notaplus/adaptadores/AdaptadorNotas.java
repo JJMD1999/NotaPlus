@@ -1,5 +1,6 @@
 package com.example.notaplus.adaptadores;
 
+import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import com.example.notaplus.R;
 import com.example.notaplus.actividades.MainActivity;
 import com.example.notaplus.tabla.Nota;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.util.List;
 
@@ -59,12 +61,14 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
 
         TextView titulo, fecha;
         LinearLayout plantilla_nota;
+        ShapeableImageView imagenNota;
 
         public ViewHolder_Nota(@NonNull View itemView) {
             super(itemView);
             titulo = itemView.findViewById(R.id.titulo);
             fecha = itemView.findViewById(R.id.fecha);
             plantilla_nota = itemView.findViewById(R.id.plantilla_nota);
+            imagenNota = itemView.findViewById(R.id.imagenNota);
         }
 
         void setNota(Nota nota) {
@@ -77,6 +81,12 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
             } else {
                 MainActivity.contexto.getApplicationContext().getResources()
                         .getColor(R.color.fondo_nota, MainActivity.contexto.getApplicationContext().getTheme());
+            }
+            if (nota.getImagen() != null) {
+                imagenNota.setImageBitmap(BitmapFactory.decodeFile(nota.getImagen()));
+                imagenNota.setVisibility(View.VISIBLE);
+            } else {
+                imagenNota.setVisibility(View.GONE);
             }
         }
     }

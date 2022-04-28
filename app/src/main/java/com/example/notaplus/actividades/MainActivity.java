@@ -1,9 +1,12 @@
 package com.example.notaplus.actividades;
 
+import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
 import androidx.appcompat.widget.SwitchCompat;
+import androidx.core.view.GravityCompat;
+import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -13,13 +16,19 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.example.notaplus.R;
 import com.example.notaplus.adaptadores.AdaptadorNotas;
 import com.example.notaplus.bbdd.BaseDeDatos;
 import com.example.notaplus.tabla.Nota;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.google.android.material.navigation.NavigationView;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -35,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
     private static final int ANADIR_NOTA = 1;
     @SuppressLint("StaticFieldLeak")
     public static Context contexto;
+    private DrawerLayout drawerLayout;
     SharedPreferences sharedPreferences = null;
     private List<Nota> listaNotas;
     private RecyclerView recyclerViewNotas;
@@ -51,7 +61,27 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        // Asignar variables iniciales
         contexto = getApplicationContext();
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        // Abrir el menú lateral al pulsar en la imagen
+        findViewById(R.id.imagenMenu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+        // Esto se ampliará para que según se clique, mostrar notas, archivo o papelera
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menu_notas:
+                case R.id.menu_archivo:
+                case R.id.menu_papelera:
+                    item.setChecked(true);
+                    break;
+            }
+            return true;
+        });
 
         // Elegir temas
         CambiarModo();
@@ -80,7 +110,7 @@ public class MainActivity extends AppCompatActivity {
     private void CargarRecycler() {
         recyclerViewNotas = findViewById(R.id.recyclerViewNotas);
         recyclerViewNotas.setLayoutManager(
-                new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
+                new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         listaNotas = new ArrayList<>();
         adaptadorNotas = new AdaptadorNotas(listaNotas);
@@ -122,7 +152,7 @@ public class MainActivity extends AppCompatActivity {
 
     /**
      * Detecta el tema del dispositivo y permite cambiarlo mediante un <i>switch</i>.
-     *
+     * <p>
      * Los temas alternan entre <b>"Claro"</b> y <b>"Oscuro"</b>.
      */
     private void CambiarModo() {
@@ -161,8 +191,8 @@ public class MainActivity extends AppCompatActivity {
      * Una vez se termine de crear una nota, se carga en el <i>MainActivity</i> al volver
      *
      * @param requestCode Código de solicitud
-     * @param resultCode Código de resultado
-     * @param data Intent
+     * @param resultCode  Código de resultado
+     * @param data        Intent
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {

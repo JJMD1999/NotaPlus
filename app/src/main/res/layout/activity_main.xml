@@ -1,64 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.drawerlayout.widget.DrawerLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-
-    <com.google.android.material.navigation.NavigationView
-        android:id="@+id/NavigationView"
-        android:layout_width="wrap_content"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:fitsSystemWindows="true"
-        app:headerLayout="@layout/plantilla_encabezado"
-        app:menu="@menu/menu">
-
-    </com.google.android.material.navigation.NavigationView>
-
-
-    <androidx.constraintlayout.widget.ConstraintLayout
-        xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fondo"
         tools:context=".actividades.MainActivity">
 
-        <TextView
-            android:id="@+id/tituloAplicacion"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:id="@+id/barraSuperior"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="14dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="14dp"
-            android:fontFamily="@font/roboto_bold"
-            android:text="@string/mis_notas"
-            android:textSize="28sp"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <ImageView
-            android:id="@+id/iconoModo"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="16dp"
-            android:layout_marginEnd="10dp"
-            android:contentDescription="@string/modo"
-            android:src="@drawable/ic_claro"
-            app:layout_constraintEnd_toStartOf="@+id/cambiarModo"
-            app:layout_constraintTop_toTopOf="parent" />
-
-        <androidx.appcompat.widget.SwitchCompat
-            android:id="@+id/cambiarModo"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:layout_marginEnd="10dp"
+            android:layout_marginTop="10dp"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.905"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent">
+
+            <ImageView
+                android:id="@+id/imagenMenu"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="10dp"
+                android:contentDescription="@string/modo"
+                android:src="@drawable/ic_menu" />
+
+            <TextView
+                android:id="@+id/tituloAplicacion"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent"
+                android:gravity="center_vertical"
+                android:layout_marginStart="14dp"
+                android:fontFamily="@font/roboto_bold"
+                android:text="@string/mis_notas"
+                android:textSize="28sp" />
+
+            <ImageView
+                android:id="@+id/iconoModo"
+                android:layout_width="45dp"
+                android:layout_height="match_parent"
+                android:layout_marginStart="90dp"
+                android:contentDescription="@string/modo"
+                android:src="@drawable/ic_claro" />
+
+            <androidx.appcompat.widget.SwitchCompat
+                android:id="@+id/cambiarModo"
+                android:layout_marginStart="10dp"
+                android:layout_width="wrap_content"
+                android:layout_height="match_parent" />
+
+        </LinearLayout>
 
         <!--Todavía sin funcionalidad-->
         <LinearLayout
@@ -109,7 +104,7 @@
             app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tituloAplicacion" />
+            app:layout_constraintTop_toBottomOf="@+id/barraSuperior" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/añadirNota"
@@ -121,11 +116,22 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.96"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/tituloAplicacion"
+            app:layout_constraintTop_toBottomOf="@+id/barraSuperior"
             app:layout_constraintVertical_bias="0.972"
             app:maxImageSize="@android:dimen/app_icon_size"
             app:srcCompat="@android:drawable/ic_input_add" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <com.google.android.material.navigation.NavigationView
+        android:id="@+id/navigationView"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_gravity="start"
+        android:fitsSystemWindows="true"
+        app:headerLayout="@layout/plantilla_encabezado"
+        app:menu="@menu/menu">
+
+    </com.google.android.material.navigation.NavigationView>
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -27,7 +27,7 @@
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_lista"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <TextView
                 android:id="@+id/fechaNota"
@@ -53,7 +53,7 @@
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_lista"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent"/>
+                app:layout_constraintTop_toTopOf="parent" />
 
             <EditText
                 android:id="@+id/tituloNota"
@@ -73,6 +73,40 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fechaNota" />
 
+            <ImageView
+                android:id="@+id/imagenNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginEnd="10dp"
+                android:adjustViewBounds="false"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tituloNota" />
+
+            <LinearLayout
+                android:id="@+id/layoutURLNota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="10dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginEnd="10dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:visibility="gone"
+                app:layout_constraintTop_toBottomOf="@id/tituloNota">
+
+                <TextView
+                    android:id="@+id/textoEnlaceWebNota"
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:autoLink="web"
+                    android:fontFamily="@font/roboto_regular"
+                    android:textSize="20sp"
+                    app:layout_constraintTop_toBottomOf="@id/imagenNota" />
+
+            </LinearLayout>
+
             <EditText
                 android:id="@+id/cuerpoNota"
                 android:layout_width="match_parent"
@@ -90,12 +124,12 @@
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/tituloNota" />
+                app:layout_constraintTop_toBottomOf="@id/layoutURLNota" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
     </ScrollView>
 
-    <include layout="@layout/plantilla_editar_nota"/>
+    <include layout="@layout/plantilla_editar_nota" />
 
 </androidx.coordinatorlayout.widget.CoordinatorLayout>

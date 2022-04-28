@@ -16,7 +16,7 @@
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:text="@string/edicion"
-        android:textSize="24sp"/>
+        android:textSize="28sp"/>
 
     <TextView
         android:id="@+id/colores"
@@ -25,7 +25,7 @@
         android:layout_marginStart="12dp"
         android:fontFamily="@font/roboto_bold"
         android:text="@string/colores"
-        android:textSize="20sp"/>
+        android:textSize="24sp"/>
 
     <LinearLayout
         android:id="@+id/color_notas"
@@ -132,6 +132,58 @@
                 android:padding="10dp"/>
 
         </FrameLayout>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutAñadirImagen"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icono_añadirImagen"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_imagen"
+            app:tint="@color/icono"/>
+
+        <TextView
+            android:id="@+id/texto_añadirImagen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/añadir_imagen"
+            android:textSize="20sp"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutAñadirURL"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:id="@+id/icono_añadirURL"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_url"
+            app:tint="@color/icono"/>
+
+        <TextView
+            android:id="@+id/texto_añadirURL"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="10dp"
+            android:fontFamily="@font/roboto_regular"
+            android:text="@string/añadir_url"
+            android:textSize="20sp"/>
 
     </LinearLayout>
 

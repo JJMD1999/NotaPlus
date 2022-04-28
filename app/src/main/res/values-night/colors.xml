@@ -9,7 +9,7 @@
     <color name="white">#FFFFFFFF</color>
     <!--Colores de temas (Oscuro)-->
     <color name="fondo">#2B2B2B</color>
-    <color name="fondo_nota">#494949</color>
+    <color name="fondo_nota">#373737</color>
     <color name="enfasis">#3C3C3C</color>
     <color name="icono">#A6A6A6</color>
 </resources>

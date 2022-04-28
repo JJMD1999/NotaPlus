@@ -13,4 +13,8 @@
     <string name="notas">Notas</string>
     <string name="archivo">Archivo</string>
     <string name="papelera">Papelera</string>
+    <string name="añadir_imagen">Añadir Imagen</string>
+    <string name="añadir_url">Añadir URL</string>
+    <string name="escribe_un_enlace_web">Escribe un enlace web…</string>
+    <string name="ok">OK</string>
 </resources>
