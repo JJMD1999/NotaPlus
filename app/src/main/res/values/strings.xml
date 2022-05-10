@@ -17,4 +17,16 @@
     <string name="añadir_url">Añadir URL</string>
     <string name="escribe_un_enlace_web">Escribe un enlace web…</string>
     <string name="ok">OK</string>
+    <string name="opciones">Opciones</string>
+    <string name="title_activity_settings">SettingsActivity</string>
+
+    <!-- Títulos de Preferencias -->
+    <string name="opciones_de_visualizacion">Opciones de visualización</string>
+    <string name="ajustes_predeterminados">Ajustes predeterminados</string>
+
+    <!-- Mensajes de Preferencias -->
+    <string name="mensaje_tema_claro">Tema claro</string>
+    <string name="mensaje_tema_oscuro">Tema oscuro</string>
+    <string name="ajustes">Ajustes</string>
+
 </resources>

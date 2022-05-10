@@ -1,12 +1,11 @@
 package com.example.notaplus.actividades;
 
-import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.app.AppCompatDelegate;
-import androidx.appcompat.widget.SwitchCompat;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.preference.PreferenceManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
@@ -16,16 +15,12 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuInflater;
-import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.Toast;
+import android.view.Gravity;
 
 import com.example.notaplus.R;
 import com.example.notaplus.adaptadores.AdaptadorNotas;
 import com.example.notaplus.bbdd.BaseDeDatos;
+import com.example.notaplus.listener.ListenerNotas;
 import com.example.notaplus.tabla.Nota;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
@@ -39,18 +34,16 @@ import java.util.List;
  * @author Julio José Meijueiro Dacosta
  * @version 1.0
  */
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends AppCompatActivity implements ListenerNotas {
 
-    private static final int ANADIR_NOTA = 1;
+    private static final int AÑADIR_NOTA = 1, ACTUALIZAR_NOTA = 2, MOSTRAR_NOTAS = 3;
     @SuppressLint("StaticFieldLeak")
     public static Context contexto;
     private DrawerLayout drawerLayout;
-    SharedPreferences sharedPreferences = null;
     private List<Nota> listaNotas;
     private RecyclerView recyclerViewNotas;
     private AdaptadorNotas adaptadorNotas;
-    private SwitchCompat switchModo;
-    private ImageView iconoModo;
+    private int posicion;
 
     /**
      * Se ejecuta cuando se inicia la actividad.
@@ -62,65 +55,63 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        cargarPreferencias();
+
         // Asignar variables iniciales
         contexto = getApplicationContext();
-        drawerLayout = findViewById(R.id.drawer_layout);
-        NavigationView navigationView = findViewById(R.id.navigationView);
-        navigationView.getMenu().getItem(0).setChecked(true);
 
-        // Abrir el menú lateral al pulsar en la imagen
-        findViewById(R.id.imagenMenu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
-
-        // Esto se ampliará para que según se clique, mostrar notas, archivo o papelera
-        navigationView.setNavigationItemSelectedListener(item -> {
-            switch (item.getItemId()) {
-                case R.id.menu_notas:
-                case R.id.menu_archivo:
-                case R.id.menu_papelera:
-                    item.setChecked(true);
-                    break;
-            }
-            return true;
-        });
-
-        // Elegir temas
-        CambiarModo();
+        // Menú lateral (Navigation Drawer)
+        menuDrawer();
 
         // Abrir "CrearNotaActivity"
-        AbrirCrearNota();
+        abrirCrearNota();
 
         // Carga las notas en pantalla
-        CargarRecycler();
-        GetNotas();
+        cargarRecycler();
+        getNotas(MOSTRAR_NOTAS);
+
     }
 
     /**
      * Abre la Activity <i>CrearNotaActivity</i> para añadir una nueva nota.
      */
-    private void AbrirCrearNota() {
+    private void abrirCrearNota() {
         FloatingActionButton anadirNota = findViewById(R.id.añadirNota);
 
         anadirNota.setOnClickListener(v -> startActivityForResult(
-                new Intent(getApplicationContext(), CrearNotaActivity.class), ANADIR_NOTA));
+                new Intent(getApplicationContext(), CrearNotaActivity.class), AÑADIR_NOTA));
     }
 
     /**
      * Asigna el <i>RecyclerView</i>, la disposición de las notas y el adaptador
      */
-    private void CargarRecycler() {
+    private void cargarRecycler() {
         recyclerViewNotas = findViewById(R.id.recyclerViewNotas);
         recyclerViewNotas.setLayoutManager(
                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
 
         listaNotas = new ArrayList<>();
-        adaptadorNotas = new AdaptadorNotas(listaNotas);
+        adaptadorNotas = new AdaptadorNotas(listaNotas, this);
         recyclerViewNotas.setAdapter(adaptadorNotas);
     }
 
+    @Override
+    public void onClickNota(Nota nota, int posicion) {
+        this.posicion = posicion;
+        Intent intent = new Intent(this, CrearNotaActivity.class);
+        intent.putExtra("existe_nota", true);
+        intent.putExtra("nota", nota);
+        startActivityForResult(intent, ACTUALIZAR_NOTA);
+    }
+
     /**
-     * Devuelve las notas de la base de datos para mostrarlas en pantalla
+     * Devuelve las notas de la base de datos para mostrarlas en pantalla.
+     * <p>
+     * VERSION 3.0: Ahora se usa un código de solicitud para saber que orden realizar (AÑADIR, ACTUALIZAR, MOSTRAR).
+     *
+     * @param requestCode Código de solicitud
      */
-    private void GetNotas() {
+    private void getNotas(int requestCode) {
         // Hilo secundario, ya que no se permiten operaciones de bases de datos en el hilo principal
         class TareaGetNotas extends AsyncTask<Void, Void, List<Nota>> {
 
@@ -133,58 +124,86 @@ public class MainActivity extends AppCompatActivity {
             @Override
             protected void onPostExecute(List<Nota> notas) {
                 super.onPostExecute(notas);
-                // Se insertan todas las notas de la base de datos si la lista está vacía (Si se ha iniciado la aplicación)
-                if (listaNotas.size() == 0) {
+                if (requestCode == MOSTRAR_NOTAS) {
                     listaNotas.addAll(notas);
                     adaptadorNotas.notifyDataSetChanged();
 
-                }
-                // Si no, se añade solamente la última nota creada al principio
-                else {
+                } else if (requestCode == AÑADIR_NOTA) {
                     listaNotas.add(0, notas.get(0));
                     adaptadorNotas.notifyItemInserted(0);
+                    recyclerViewNotas.smoothScrollToPosition(0);
+
+                } else if (requestCode == ACTUALIZAR_NOTA) {
+                    listaNotas.remove(posicion);
+                    listaNotas.add(posicion, notas.get(posicion));
+                    adaptadorNotas.notifyItemChanged(posicion);
                 }
-                recyclerViewNotas.smoothScrollToPosition(0); // Volver al principio
             }
         }
         new TareaGetNotas().execute();
     }
 
+    private void menuDrawer() {
+        drawerLayout = findViewById(R.id.drawer_layout);
+        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView.getMenu().getItem(0).setChecked(true);
+
+        // Abrir el menú lateral al pulsar en la imagen
+        findViewById(R.id.imagenMenu).setOnClickListener(v -> drawerLayout.openDrawer(GravityCompat.START));
+
+
+        // Esto se ampliará para que según se clique, mostrar notas, archivo o papelera
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.menu_notas:
+                case R.id.menu_archivo:
+                case R.id.menu_papelera:
+                    item.setChecked(true);
+                    break;
+                case R.id.opciones:
+                    startActivity(new Intent(this, SettingsActivity.class));
+                    break;
+            }
+            return true;
+        });
+    }
+
     /**
-     * Detecta el tema del dispositivo y permite cambiarlo mediante un <i>switch</i>.
-     * <p>
-     * Los temas alternan entre <b>"Claro"</b> y <b>"Oscuro"</b>.
+     * Método que se encarga de cargar las preferencias al inicio y mientras se ejecuta la aplicación
      */
-    private void CambiarModo() {
-        switchModo = findViewById(R.id.cambiarModo);
-        iconoModo = findViewById(R.id.iconoModo);
+    private void cargarPreferencias() {
+        PreferenceManager.setDefaultValues(this, R.xml.preferencias, false);
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
 
-        sharedPreferences = getSharedPreferences("night", 0);
-        boolean modoOscuro = sharedPreferences.getBoolean("modo_oscuro", true);
-
-        if (modoOscuro) {
+        if (preferencias.getBoolean(SettingsActivity.KEY_PREF_TEMA, false)) {
             AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-            switchModo.setChecked(true);
-            iconoModo.setImageResource(R.drawable.ic_oscuro);
+        } else {
+            AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
         }
 
-        switchModo.setOnCheckedChangeListener((buttonView, isChecked) -> {
-            if (isChecked) {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
-                switchModo.setChecked(true);
-                iconoModo.setImageResource(R.drawable.ic_oscuro);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("modo_oscuro", true);
-                editor.apply();
-            } else {
-                AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
-                switchModo.setChecked(false);
-                iconoModo.setImageResource(R.drawable.ic_claro);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putBoolean("modo_oscuro", false);
-                editor.apply();
+        // Listener que se encarga de manejar los cambios en las preferencias
+        SharedPreferences.OnSharedPreferenceChangeListener listener = (prefs, key) -> {
+            if (key.equals(SettingsActivity.KEY_PREF_TEMA)) {
+                if (prefs.getBoolean(key, true)) {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_YES);
+                } else {
+                    AppCompatDelegate.setDefaultNightMode(AppCompatDelegate.MODE_NIGHT_NO);
+                }
             }
-        });
+        };
+        preferencias.registerOnSharedPreferenceChangeListener(listener);
+    }
+
+    /**
+     * Para cerrar el panel lateral al darle hacia atrás en vez de cerrar la aplicación.
+     */
+    @Override
+    public void onBackPressed() {
+        if(drawerLayout.isDrawerOpen(GravityCompat.START)){
+            drawerLayout.closeDrawer(GravityCompat.START);
+        }else{
+            super.onBackPressed();
+        }
     }
 
     /**
@@ -197,8 +216,12 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if (requestCode == ANADIR_NOTA && resultCode == RESULT_OK) {
-            GetNotas();
+        if (requestCode == AÑADIR_NOTA && resultCode == RESULT_OK) {
+            getNotas(AÑADIR_NOTA);
+        } else if (requestCode == ACTUALIZAR_NOTA && resultCode == RESULT_OK) {
+            if (data != null) {
+                getNotas(ACTUALIZAR_NOTA);
+            }
         }
     }
 }

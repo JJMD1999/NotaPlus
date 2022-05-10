@@ -13,8 +13,8 @@
     <color name="enfasis">#DFDFDF</color>
     <color name="icono">#737272</color>
     <!--Colores de notas-->
-    <color name="azul">#00C4FF</color>
-    <color name="rojo">#F10606</color>
+    <color name="azul">#0BB1E3</color>
+    <color name="rojo">#F10808</color>
     <color name="naranja">#F36C05</color>
-    <color name="amarillo">#F3F305</color>
+    <color name="amarillo">#E1E10D</color>
 </resources>

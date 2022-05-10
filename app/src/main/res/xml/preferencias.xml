@@ -1,0 +1,18 @@
+<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/opciones_de_visualizacion">
+
+        <SwitchPreferenceCompat
+            app:key="tema"
+            app:title="Tema"
+            app:summaryOff="@string/mensaje_tema_claro"
+            app:summaryOn="@string/mensaje_tema_oscuro" />
+
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/ajustes_predeterminados">
+
+
+    </PreferenceCategory>
+
+</PreferenceScreen>

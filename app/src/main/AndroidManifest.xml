@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.notaplus">
-
-    <!--Indica que la aplicación necesita permisos para acceder al almacenamiento-->
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <!-- Indica que la aplicación necesita permisos para acceder al almacenamiento -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -12,6 +11,10 @@
         android:roundIcon="@mipmap/ic_icono_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NotaPlus">
+        <activity
+            android:name=".actividades.SettingsActivity"
+            android:exported="false"
+            android:label="@string/title_activity_settings" />
         <activity
             android:name=".actividades.CrearNotaActivity"
             android:exported="false" />

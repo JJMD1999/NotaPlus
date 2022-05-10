@@ -4,6 +4,7 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable-v24/ic_launcher_foreground.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/barra.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/color_nota_amarillo.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/color_nota_azul.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/color_nota_naranja.xml" value="0.2595" />
@@ -11,21 +12,28 @@
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/color_nota_rojo.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/fondo_editar_nota.xml" value="0.247" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/fondo_nota.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_atras.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_claro.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_notas.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_oscuro.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/font/roboto.xml" value="0.284375" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/font/ubuntu.xml" value="0.284375" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/activity_crear_nota.xml" value="0.264" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/activity_main.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/activity_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/fragment_blank.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/fragment_notas.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_editar_nota.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_encabezado.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_enlace.xml" value="0.264" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_nota.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/settings_activity.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/menu/menu.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/mipmap-anydpi-v26/ic_icono_app.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/mipmap-anydpi-v26/ic_icono_app_round.xml" value="0.124" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/xml/preferencias.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/xml/root_preferences.xml" value="0.25416666666666665" />
       </map>
     </option>
   </component>

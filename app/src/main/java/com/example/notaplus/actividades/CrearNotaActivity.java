@@ -32,6 +32,7 @@ import com.example.notaplus.R;
 import com.example.notaplus.bbdd.BaseDeDatos;
 import com.example.notaplus.tabla.Nota;
 import com.google.android.material.bottomsheet.BottomSheetBehavior;
+import com.google.android.material.imageview.ShapeableImageView;
 
 import java.io.FileNotFoundException;
 import java.io.InputStream;
@@ -49,24 +50,46 @@ public class CrearNotaActivity extends AppCompatActivity {
      */
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
     /**
-     * Solicitud de permiso para accedera las imágenes.
+     * Solicitud de permiso para acceder a las imágenes.
      */
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
-    private ImageView atras, check, imagenNota;
+    private ImageView atras, check;
+    private ShapeableImageView imagenNota;
     private EditText tituloNota, cuerpoNota;
     private TextView fechaNota, textoEnlaceWeb;
     private LinearLayout layoutURLNota;
     private String colorSeleccionado, imagenSeleccionada;
     private AlertDialog dialogoAlerta;
+    private Nota notaExistente;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_crear_nota);
 
-        AsignarElementos();
-        atras.setOnClickListener(v -> onBackPressed()); // Vuelve a atrás
-        check.setOnClickListener(v -> GuardarNota()); // LLama a GuardarNota() cuando se presiona
+        asignarElementos();
+        atras.setOnClickListener(v -> {
+            onBackPressed();
+            Toast.makeText(this, "Cambios descartados", Toast.LENGTH_SHORT).show();
+        }); // Vuelve a atrás
+
+        check.setOnClickListener(v -> guardarNota()); // LLama a guardarNota() cuando se presiona
+
+        // Para borrar imagen de la nota
+        findViewById(R.id.borrarImagenNota).setOnClickListener(v -> {
+            imagenNota.setImageBitmap(null);
+            imagenNota.setVisibility(View.GONE);
+            findViewById(R.id.borrarImagenNota).setVisibility(View.GONE);
+            imagenSeleccionada = "";
+        });
+
+        // Para borrar enlace web de la nota
+        findViewById(R.id.borrarEnlaceWebNota).setOnClickListener(v -> {
+            textoEnlaceWeb.setText(null);
+            layoutURLNota.setVisibility(View.GONE);
+        });
+
+        existeNota();
 
         habilitarEdicion();
     }
@@ -74,7 +97,7 @@ public class CrearNotaActivity extends AppCompatActivity {
     /**
      * Asignación de los componentes del layout al código.
      */
-    private void AsignarElementos() {
+    private void asignarElementos() {
         atras = findViewById(R.id.atras);
         check = findViewById(R.id.check);
         tituloNota = findViewById(R.id.tituloNota);
@@ -85,12 +108,41 @@ public class CrearNotaActivity extends AppCompatActivity {
         fechaNota.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.getDefault()).format(new Date()));
         layoutURLNota = findViewById(R.id.layoutURLNota);
         textoEnlaceWeb = findViewById(R.id.textoEnlaceWebNota);
+        // Asignar color e imagen predeterminados (Si no puede generar comportamientos inesperados)
+        colorSeleccionado = getResources().getString(0 + R.color.fondo_nota);
+        imagenSeleccionada = "";
+    }
+
+    /**
+     * Comprueba que la nota existe para cargar los datos de la misma
+     */
+    private void existeNota() {
+        if (getIntent().getBooleanExtra("existe_nota", false)) {
+            notaExistente = (Nota) getIntent().getSerializableExtra("nota");
+
+            tituloNota.setText(notaExistente.getTitulo());
+            cuerpoNota.setText(notaExistente.getTexto());
+            fechaNota.setText(notaExistente.getFecha());
+            colorSeleccionado = notaExistente.getColor();
+
+            if (notaExistente.getImagen() != null && !notaExistente.getImagen().isEmpty()) {
+                imagenNota.setImageBitmap(BitmapFactory.decodeFile(notaExistente.getImagen()));
+                imagenNota.setVisibility(View.VISIBLE);
+                findViewById(R.id.borrarImagenNota).setVisibility(View.VISIBLE);
+                imagenSeleccionada = notaExistente.getImagen();
+            }
+
+            if (notaExistente.getUrl() != null) {
+                textoEnlaceWeb.setText(notaExistente.getUrl());
+                layoutURLNota.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     /**
      * Guarda la nota en la base de datos.
      */
-    private void GuardarNota() {
+    private void guardarNota() {
         if (tituloNota.getText().toString().isEmpty()) {
             Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_LONG).show();
         } else if (cuerpoNota.getText().toString().isEmpty()) {
@@ -107,8 +159,13 @@ public class CrearNotaActivity extends AppCompatActivity {
                 nota.setUrl(textoEnlaceWeb.getText().toString());
             }
 
+            // Si hemos seleccionado una nota existente, se le asigna el mismo id, ya que esta reemplazará a la existente
+            if (notaExistente != null) {
+                nota.setId(notaExistente.getId());
+            }
+
             // Hilo secundario, ya que no se permiten operaciones de bases de datos en el hilo principal
-            class TareaGuardarNota extends AsyncTask<Void, Void, Void>{
+            class TareaGuardarNota extends AsyncTask<Void, Void, Void> {
 
                 @Override
                 protected Void doInBackground(Void... voids) {
@@ -160,7 +217,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         });
 
         plantilla_editar_nota.findViewById(R.id.view_azul).setOnClickListener(v -> {
-            colorSeleccionado = "#00C4FF";
+            colorSeleccionado = "#0BB1E3";
             imagenColorPredeterminado.setImageResource(0);
             imagenColorAzul.setImageResource(R.drawable.ic_check);
             imagenColorRojo.setImageResource(0);
@@ -169,7 +226,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         });
 
         plantilla_editar_nota.findViewById(R.id.view_rojo).setOnClickListener(v -> {
-            colorSeleccionado = "##FF0000";
+            colorSeleccionado = "#F10808";
             imagenColorPredeterminado.setImageResource(0);
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(R.drawable.ic_check);
@@ -178,7 +235,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         });
 
         plantilla_editar_nota.findViewById(R.id.view_naranja).setOnClickListener(v -> {
-            colorSeleccionado = "#FF6F00";
+            colorSeleccionado = "#F36C05";
             imagenColorPredeterminado.setImageResource(0);
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(0);
@@ -187,13 +244,33 @@ public class CrearNotaActivity extends AppCompatActivity {
         });
 
         plantilla_editar_nota.findViewById(R.id.view_amarillo).setOnClickListener(v -> {
-            colorSeleccionado = "#F1F106";
+            colorSeleccionado = "#E1E10D";
             imagenColorPredeterminado.setImageResource(0);
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(0);
             imagenColorNaranja.setImageResource(0);
             imagenColorAmarillo.setImageResource(R.drawable.ic_check);
         });
+
+        // En caso de mostrar una nota existente
+        if (notaExistente != null && notaExistente.getColor() != null) {
+            switch (notaExistente.getColor()) {
+                case "#0BB1E3":
+                    plantilla_editar_nota.findViewById(R.id.view_azul).performClick();
+                    break;
+                case "#F10808":
+                    plantilla_editar_nota.findViewById(R.id.view_rojo).performClick();
+                    break;
+                case "#F36C05":
+                    plantilla_editar_nota.findViewById(R.id.view_naranja).performClick();
+                    break;
+                case "#E1E10D":
+                    plantilla_editar_nota.findViewById(R.id.view_amarillo).performClick();
+                    break;
+                default:
+                    plantilla_editar_nota.findViewById(R.id.view_color_predeterminado).performClick();
+            }
+        }
 
         // Añadir Imagen
         plantilla_editar_nota.findViewById(R.id.layoutAñadirImagen).setOnClickListener(v -> {
@@ -203,10 +280,10 @@ public class CrearNotaActivity extends AppCompatActivity {
             if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                         CrearNotaActivity.this,
-                        new String[] {Manifest.permission.READ_EXTERNAL_STORAGE},
+                        new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
                         REQUEST_CODE_STORAGE_PERMISSION);
             } else {
-                SeleccionarImagen();
+                seleccionarImagen();
             }
         });
 
@@ -220,7 +297,7 @@ public class CrearNotaActivity extends AppCompatActivity {
     /**
      * Método para seleccionar una imagen de la galería.
      */
-    private void SeleccionarImagen() {
+    private void seleccionarImagen() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         try {
             startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
@@ -232,8 +309,8 @@ public class CrearNotaActivity extends AppCompatActivity {
     /**
      * Método que maneja las solicitudes de permiso de la aplicación.
      *
-     * @param requestCode Código de solicitud.
-     * @param permissions Permisos solicitados.
+     * @param requestCode  Código de solicitud.
+     * @param permissions  Permisos solicitados.
      * @param grantResults Resultado. Ya sea <i>CONCEDIDO</i> o <i>DENEGADO</i>.
      */
     @Override
@@ -242,7 +319,7 @@ public class CrearNotaActivity extends AppCompatActivity {
 
         if (requestCode == REQUEST_CODE_STORAGE_PERMISSION && grantResults.length > 0) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
-                SeleccionarImagen();
+                seleccionarImagen();
             } else {
                 Toast.makeText(this, "Permiso denegado", Toast.LENGTH_LONG).show();
             }
@@ -253,8 +330,8 @@ public class CrearNotaActivity extends AppCompatActivity {
      * Método para seleccionar una imagen de la galería e insertarla en la nota.
      *
      * @param requestCode Código de solicitud.
-     * @param resultCode Código de resultado
-     * @param data Intent
+     * @param resultCode  Código de resultado
+     * @param data        Intent
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
@@ -269,6 +346,7 @@ public class CrearNotaActivity extends AppCompatActivity {
 
                     imagenNota.setImageBitmap(imagen);
                     imagenNota.setVisibility(View.VISIBLE);
+                    findViewById(R.id.borrarImagenNota).setVisibility(View.VISIBLE);
 
                     imagenSeleccionada = getRutaImagen(imagenUri);
 
@@ -296,9 +374,15 @@ public class CrearNotaActivity extends AppCompatActivity {
             int indice = cursor.getColumnIndex("_data");
             ruta = cursor.getString(indice);
         }
+        assert cursor != null;
+        cursor.close();
+
         return ruta;
     }
 
+    /**
+     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota
+     */
     private void mostrarDialogoURL() {
         if (dialogoAlerta == null) {
             AlertDialog.Builder constructor = new AlertDialog.Builder(CrearNotaActivity.this);

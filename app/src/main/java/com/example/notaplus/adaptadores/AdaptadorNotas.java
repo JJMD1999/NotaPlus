@@ -10,11 +10,11 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.notaplus.R;
 import com.example.notaplus.actividades.MainActivity;
+import com.example.notaplus.listener.ListenerNotas;
 import com.example.notaplus.tabla.Nota;
 import com.google.android.material.imageview.ShapeableImageView;
 
@@ -26,9 +26,11 @@ import java.util.List;
 public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHolder_Nota>{
 
     private List<Nota> notas;
+    private ListenerNotas listenerNotas;
 
-    public AdaptadorNotas(List<Nota> notas) {
+    public AdaptadorNotas(List<Nota> notas, ListenerNotas listenerNotas) {
         this.notas = notas;
+        this.listenerNotas = listenerNotas;
     }
 
     @NonNull
@@ -42,6 +44,9 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
     @Override
     public void onBindViewHolder(@NonNull ViewHolder_Nota holder, int posicion) {
         holder.setNota(notas.get(posicion));
+        holder.plantilla_nota.setOnClickListener(v -> listenerNotas.onClickNota(
+                notas.get(holder.getAdapterPosition()),
+                holder.getAdapterPosition()));
     }
 
     @Override
@@ -61,14 +66,14 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
 
         TextView titulo, fecha;
         LinearLayout plantilla_nota;
-        ShapeableImageView imagenNota;
+        ShapeableImageView imagen;
 
         public ViewHolder_Nota(@NonNull View itemView) {
             super(itemView);
+            plantilla_nota = itemView.findViewById(R.id.plantilla_nota);
             titulo = itemView.findViewById(R.id.titulo);
             fecha = itemView.findViewById(R.id.fecha);
-            plantilla_nota = itemView.findViewById(R.id.plantilla_nota);
-            imagenNota = itemView.findViewById(R.id.imagenNota);
+            imagen = itemView.findViewById(R.id.imagen);
         }
 
         void setNota(Nota nota) {
@@ -83,10 +88,10 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
                         .getColor(R.color.fondo_nota, MainActivity.contexto.getApplicationContext().getTheme());
             }
             if (nota.getImagen() != null) {
-                imagenNota.setImageBitmap(BitmapFactory.decodeFile(nota.getImagen()));
-                imagenNota.setVisibility(View.VISIBLE);
+                imagen.setImageBitmap(BitmapFactory.decodeFile(nota.getImagen()));
+                imagen.setVisibility(View.VISIBLE);
             } else {
-                imagenNota.setVisibility(View.GONE);
+                imagen.setVisibility(View.GONE);
             }
         }
     }

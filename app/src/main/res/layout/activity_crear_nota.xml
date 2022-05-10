@@ -5,12 +5,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/fondo"
+    android:focusable="true"
+    android:focusableInTouchMode="true"
     tools:context=".actividades.CrearNotaActivity">
 
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="50dp"
+        android:layout_marginBottom="10dp"
         android:paddingBottom="10dp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -73,15 +75,30 @@
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/fechaNota" />
 
-            <ImageView
+            <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imagenNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
+                android:layout_marginTop="10dp"
                 android:layout_marginEnd="10dp"
-                android:adjustViewBounds="false"
+                android:layout_marginBottom="10dp"
+                android:adjustViewBounds="true"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tituloNota" />
+                app:layout_constraintTop_toBottomOf="@id/tituloNota"
+                app:shapeAppearanceOverlay="@style/estiloImagenNota" />
+
+            <ImageView
+                android:id="@+id/borrarImagenNota"
+                android:layout_width="30dp"
+                android:layout_height="30dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginEnd="10dp"
+                android:src="@drawable/ic_borrar"
+                android:visibility="gone"
+                app:layout_constraintEnd_toEndOf="@id/imagenNota"
+                app:layout_constraintTop_toTopOf="@id/imagenNota"
+                app:tint="@color/rojo" />
 
             <LinearLayout
                 android:id="@+id/layoutURLNota"
@@ -93,7 +110,7 @@
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tituloNota">
+                app:layout_constraintTop_toBottomOf="@id/imagenNota">
 
                 <TextView
                     android:id="@+id/textoEnlaceWebNota"
@@ -103,7 +120,14 @@
                     android:autoLink="web"
                     android:fontFamily="@font/roboto_regular"
                     android:textSize="20sp"
-                    app:layout_constraintTop_toBottomOf="@id/imagenNota" />
+                    app:layout_constraintTop_toBottomOf="@id/layoutURLNota" />
+
+                <ImageView
+                    android:id="@+id/borrarEnlaceWebNota"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:src="@drawable/ic_borrar"
+                    app:tint="@color/rojo" />
 
             </LinearLayout>
 

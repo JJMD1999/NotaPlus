@@ -4,20 +4,33 @@
     android:id="@+id/plantilla_editar_nota"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@color/enfasis"
+    android:background="@drawable/fondo_editar_nota"
     android:orientation="vertical"
-    app:behavior_peekHeight="40dp"
+    app:behavior_peekHeight="35dp"
     app:layout_behavior="@string/bottom_sheet_behavior">
 
-    <TextView
+    <LinearLayout
         android:id="@+id/edicion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+    <ImageView
+        android:layout_width="80dp"
+        android:layout_height="8dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginBottom="10dp"
+        android:layout_gravity="center"
+        android:src="@drawable/barra"/>
+
+    <TextView
+        android:id="@+id/textoEdicion"
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:fontFamily="@font/roboto_bold"
         android:gravity="center"
         android:text="@string/edicion"
         android:textSize="28sp"/>
-
+    </LinearLayout>
     <TextView
         android:id="@+id/colores"
         android:layout_width="wrap_content"
