@@ -39,3 +39,22 @@
 ### Cambios menores
 
 - Pequeño cambio de diseño en interfaz principal.
+
+<br><hr><br>
+
+## Versión 3.0
+### Funciones añadidas
+
+- Añadida la función de seleccionar una nota desde la vista de previa y mostrarla.
+- Añadida la función de editar una nota y guardar los cambios.
+- Ya se pueden eliminar las imágenes y los enlaces de las notas.
+- Creada `SettingsActivity` desde dónde configurar preferencias de la aplicación.
+
+### Cambios menores
+
+- Añadido el botón `Opciones` al menú lateral.
+- Eliminado el icono de cambiar de tema (Sustituído por `SettingsActivity`).
+- Personalización de la interfaz.
+- Corregido un problema con la interfaz al añadir una imagen a una nota.
+- Corregido un problema que, al asignar un color a una nota, este se asignaba a todas las notas anteriores si estas no tenían ningún color seleccionado.
+
