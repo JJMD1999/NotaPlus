@@ -1,4 +1,12 @@
 <resources>
+    <!-- Títulos de Preferencias -->
+    <string name="opciones_de_visualizacion">Opciones de visualización</string>
+    <string name="ajustes_predeterminados">Ajustes predeterminados</string>
+
+    <!-- Mensajes de Preferencias -->
+    <string name="mensaje_tema_claro">Tema claro</string>
+    <string name="mensaje_tema_oscuro">Tema oscuro</string>
+
     <string name="app_name">NotaPlus</string>
     <string name="mis_notas">Mis Notas</string>
     <string name="anadir_lista">Añadir lista</string>
@@ -19,14 +27,12 @@
     <string name="ok">OK</string>
     <string name="opciones">Opciones</string>
     <string name="title_activity_settings">SettingsActivity</string>
-
-    <!-- Títulos de Preferencias -->
-    <string name="opciones_de_visualizacion">Opciones de visualización</string>
-    <string name="ajustes_predeterminados">Ajustes predeterminados</string>
-
-    <!-- Mensajes de Preferencias -->
-    <string name="mensaje_tema_claro">Tema claro</string>
-    <string name="mensaje_tema_oscuro">Tema oscuro</string>
     <string name="ajustes">Ajustes</string>
-
+    <string name="borrar_nota">Borrar Nota</string>
+    <string name="cancelar">CANCELAR</string>
+    <string name="pregunta_eliminar_nota">¿Seguro que quieres eliminar la nota?</string>
+    <string name="eliminar">ELIMINAR</string>
+    <string name="buscar_notas">Buscar notas</string>
+    <string name="agregar_etiqueta">Agregar etiqueta</string>
+    <string name="escribe_un_nombre_para_la_etiqueta">Escribe un nombre para la etiqueta</string>
 </resources>

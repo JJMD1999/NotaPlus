@@ -16,7 +16,7 @@
             android:id="@+id/barraSuperior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
+            android:layout_marginStart="15dp"
             android:layout_marginTop="20dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -33,13 +33,29 @@
                 android:id="@+id/tituloAplicacion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:gravity="center_vertical"
                 android:layout_marginStart="14dp"
                 android:fontFamily="@font/roboto_bold"
+                android:gravity="center_vertical"
                 android:text="@string/mis_notas"
                 android:textSize="28sp" />
 
         </LinearLayout>
+
+        <SearchView
+            android:id="@+id/barraDeBusqueda"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="15dp"
+            android:layout_marginTop="12dp"
+            android:layout_marginEnd="15dp"
+            android:background="@drawable/fondo_nota"
+            android:focusable="false"
+            android:iconifiedByDefault="false"
+            android:inputType="text"
+            android:queryBackground="@android:color/transparent"
+            android:queryHint="@string/buscar_notas"
+            android:searchIcon="@drawable/ic_buscar"
+            app:layout_constraintTop_toBottomOf="@id/barraSuperior" />
 
         <!--Todavía sin funcionalidad-->
         <LinearLayout
@@ -90,7 +106,7 @@
             app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barraSuperior" />
+            app:layout_constraintTop_toBottomOf="@+id/barraDeBusqueda" />
 
         <com.google.android.material.floatingactionbutton.FloatingActionButton
             android:id="@+id/añadirNota"
@@ -98,6 +114,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:contentDescription="@string/anadir_nota"
+            app:backgroundTint="@color/enfasis"
             app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.96"
@@ -105,7 +122,8 @@
             app:layout_constraintTop_toBottomOf="@+id/barraSuperior"
             app:layout_constraintVertical_bias="0.972"
             app:maxImageSize="@android:dimen/app_icon_size"
-            app:srcCompat="@android:drawable/ic_input_add" />
+            app:srcCompat="@android:drawable/ic_input_add"
+            app:tint="@color/icono" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
@@ -116,7 +134,7 @@
         android:layout_gravity="start"
         android:fitsSystemWindows="true"
         app:headerLayout="@layout/plantilla_encabezado"
-        app:menu="@menu/menu">
+        app:menu="@menu/menu_lateral">
 
     </com.google.android.material.navigation.NavigationView>
 

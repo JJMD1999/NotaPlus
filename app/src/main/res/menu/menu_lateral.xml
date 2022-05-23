@@ -20,7 +20,7 @@
         android:checkableBehavior="none"
         android:enabled="true">
         <item
-            android:id="@+id/opciones"
+            android:id="@+id/menu_opciones"
             android:icon="@drawable/ic_opciones"
             android:title="@string/opciones" />
     </group>

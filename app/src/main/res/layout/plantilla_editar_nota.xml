@@ -14,31 +14,33 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    <ImageView
-        android:layout_width="80dp"
-        android:layout_height="8dp"
-        android:layout_marginTop="15dp"
-        android:layout_marginBottom="10dp"
-        android:layout_gravity="center"
-        android:src="@drawable/barra"/>
 
-    <TextView
-        android:id="@+id/textoEdicion"
-        android:layout_width="match_parent"
-        android:layout_height="50dp"
-        android:fontFamily="@font/roboto_bold"
-        android:gravity="center"
-        android:text="@string/edicion"
-        android:textSize="28sp"/>
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="8dp"
+            android:layout_gravity="center"
+            android:layout_marginTop="15dp"
+            android:layout_marginBottom="10dp"
+            android:src="@drawable/barra" />
+
+        <TextView
+            android:id="@+id/textoEdicion"
+            android:layout_width="match_parent"
+            android:layout_height="50dp"
+            android:fontFamily="@font/roboto_bold"
+            android:gravity="center"
+            android:text="@string/edicion"
+            android:textSize="28sp" />
     </LinearLayout>
+
     <TextView
         android:id="@+id/colores"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="12dp"
-        android:fontFamily="@font/roboto_bold"
+        android:fontFamily="@font/roboto_medium"
         android:text="@string/colores"
-        android:textSize="24sp"/>
+        android:textSize="24sp" />
 
     <LinearLayout
         android:id="@+id/color_notas"
@@ -58,7 +60,7 @@
                 android:id="@+id/view_color_predeterminado"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_nota_predeterminado"/>
+                android:background="@drawable/color_nota_predeterminado" />
 
             <ImageView
                 android:id="@+id/imagenColorPredeterminado"
@@ -79,13 +81,13 @@
                 android:id="@+id/view_azul"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_nota_azul"/>
+                android:background="@drawable/color_nota_azul" />
 
             <ImageView
                 android:id="@+id/imagenColorAzul"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </FrameLayout>
 
@@ -98,13 +100,13 @@
                 android:id="@+id/view_naranja"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_nota_naranja"/>
+                android:background="@drawable/color_nota_naranja" />
 
             <ImageView
                 android:id="@+id/imagenColorNaranja"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </FrameLayout>
 
@@ -117,13 +119,13 @@
                 android:id="@+id/view_rojo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_nota_rojo"/>
+                android:background="@drawable/color_nota_rojo" />
 
             <ImageView
                 android:id="@+id/imagenColorRojo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </FrameLayout>
 
@@ -136,13 +138,13 @@
                 android:id="@+id/view_amarillo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:background="@drawable/color_nota_amarillo"/>
+                android:background="@drawable/color_nota_amarillo" />
 
             <ImageView
                 android:id="@+id/imagenColorAmarillo"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
-                android:padding="10dp"/>
+                android:padding="10dp" />
 
         </FrameLayout>
 
@@ -161,16 +163,16 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_imagen"
-            app:tint="@color/icono"/>
+            app:tint="@color/icono" />
 
         <TextView
             android:id="@+id/texto_añadirImagen"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/roboto_regular"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/añadir_imagen"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
 
     </LinearLayout>
 
@@ -187,16 +189,44 @@
             android:layout_width="36dp"
             android:layout_height="36dp"
             android:src="@drawable/ic_url"
-            app:tint="@color/icono"/>
+            app:tint="@color/icono" />
 
         <TextView
             android:id="@+id/texto_añadirURL"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginStart="10dp"
-            android:fontFamily="@font/roboto_regular"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_medium"
             android:text="@string/añadir_url"
-            android:textSize="20sp"/>
+            android:textSize="20sp" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/layoutEliminarNota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:gravity="center_vertical"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <ImageView
+            android:id="@+id/icono_borrarNota"
+            android:layout_width="36dp"
+            android:layout_height="36dp"
+            android:src="@drawable/ic_borrar"
+            app:tint="@color/rojo" />
+
+        <TextView
+            android:id="@+id/texto_borrarNota"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:fontFamily="@font/roboto_medium"
+            android:text="@string/borrar_nota"
+            android:textColor="@color/rojo"
+            android:textSize="20sp" />
 
     </LinearLayout>
 

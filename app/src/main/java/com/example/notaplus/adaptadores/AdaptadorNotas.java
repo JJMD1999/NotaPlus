@@ -18,19 +18,30 @@ import com.example.notaplus.listener.ListenerNotas;
 import com.example.notaplus.tabla.Nota;
 import com.google.android.material.imageview.ShapeableImageView;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Adaptador para las notas
  */
-public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHolder_Nota>{
+public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHolder_Nota> {
 
     private List<Nota> notas;
     private ListenerNotas listenerNotas;
+    private List<Nota> copiaNotas;
 
     public AdaptadorNotas(List<Nota> notas, ListenerNotas listenerNotas) {
         this.notas = notas;
         this.listenerNotas = listenerNotas;
+        copiaNotas = notas;
+    }
+
+    public List<Nota> getNotas() {
+        return notas;
+    }
+
+    public void setNotas(List<Nota> notas) {
+        this.notas = notas;
     }
 
     @NonNull
@@ -94,5 +105,27 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
                 imagen.setVisibility(View.GONE);
             }
         }
+    }
+
+    /**
+     * Filtro de búsqueda que permite visualizar las notas que contengan el título o el contenido indicado en el <i>SearchView</i>
+     *
+     * @param busqueda Filtro de búsqueda
+     */
+    public void buscarNotas(String busqueda) {
+        if (busqueda.trim().isEmpty()) {
+            notas = copiaNotas;
+        } else {
+            ArrayList<Nota> listaTemporal = new ArrayList<>();
+            for (Nota nota : copiaNotas) {
+                if (nota.getTitulo().toLowerCase().contains(busqueda.toLowerCase())
+                        || nota.getTexto().toLowerCase().contains(busqueda.toLowerCase())
+                        || nota.getEtiqueta() != null && nota.getEtiqueta().toLowerCase().contains(busqueda.toLowerCase())) {
+                    listaTemporal.add(nota);
+                }
+            }
+            notas = listaTemporal;
+        }
+        this.notifyDataSetChanged();
     }
 }

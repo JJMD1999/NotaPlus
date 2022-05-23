@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/plantilla_enlace"
+    android:id="@+id/plantilla_borrar_nota"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_gravity="center"
@@ -9,30 +9,30 @@
     android:background="@drawable/fondo_nota">
 
     <ImageView
-        android:id="@+id/imagenAñadirURL"
+        android:id="@+id/imagenBorrarNota"
         android:layout_width="32dp"
         android:layout_height="32dp"
         android:layout_marginStart="10dp"
         android:layout_marginTop="10dp"
-        android:src="@drawable/ic_url"
+        android:src="@drawable/ic_borrar"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
-        android:id="@+id/añadirURLTitulo"
+        android:id="@+id/borrarNotaTitulo"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginStart="10dp"
         android:fontFamily="@font/roboto_bold"
-        android:text="@string/añadir_url"
+        android:text="@string/borrar_nota"
         android:textSize="20sp"
-        app:layout_constraintBottom_toBottomOf="@id/imagenAñadirURL"
+        app:layout_constraintBottom_toBottomOf="@id/imagenBorrarNota"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toEndOf="@id/imagenAñadirURL"
-        app:layout_constraintTop_toTopOf="@id/imagenAñadirURL" />
+        app:layout_constraintStart_toEndOf="@id/imagenBorrarNota"
+        app:layout_constraintTop_toTopOf="@id/imagenBorrarNota" />
 
-    <EditText
-        android:id="@+id/textoURL"
+    <TextView
+        android:id="@+id/textoBorrarNota"
         android:layout_width="match_parent"
         android:layout_height="48dp"
         android:layout_marginStart="10dp"
@@ -41,31 +41,30 @@
         android:background="@null"
         android:fontFamily="@font/roboto_medium"
         android:gravity="center_vertical"
-        android:hint="@string/escribe_un_enlace_web"
-        android:imeOptions="actionDone"
-        android:inputType="textUri"
+        android:text="@string/pregunta_eliminar_nota"
         android:paddingStart="10dp"
         android:paddingEnd="10dp"
         android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/imagenAñadirURL" />
+        app:layout_constraintTop_toBottomOf="@id/imagenBorrarNota" />
 
     <TextView
-        android:id="@+id/botonAñadirURL"
+        android:id="@+id/botonBorrarNota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="10dp"
         android:layout_marginBottom="10dp"
         android:fontFamily="@font/roboto_bold"
         android:padding="10dp"
-        android:text="@string/ok"
+        android:text="@string/eliminar"
+        android:textColor="@color/rojo"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/textoURL" />
+        app:layout_constraintTop_toBottomOf="@id/textoBorrarNota" />
 
     <TextView
-        android:id="@+id/botonCancelarURL"
+        android:id="@+id/botonCancelarBorrarNota"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginEnd="15dp"
@@ -75,8 +74,7 @@
         android:text="@string/cancelar"
         android:textSize="20sp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/botonAñadirURL"
-        app:layout_constraintTop_toBottomOf="@id/textoURL" />
-
+        app:layout_constraintEnd_toStartOf="@id/botonBorrarNota"
+        app:layout_constraintTop_toBottomOf="@id/textoBorrarNota" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

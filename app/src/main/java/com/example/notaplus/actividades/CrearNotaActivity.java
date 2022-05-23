@@ -8,6 +8,7 @@ import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.content.ActivityNotFoundException;
 import android.content.Intent;
 import android.content.pm.PackageManager;
@@ -53,13 +54,13 @@ public class CrearNotaActivity extends AppCompatActivity {
      * Solicitud de permiso para acceder a las imágenes.
      */
     private static final int REQUEST_CODE_SELECT_IMAGE = 2;
-    private ImageView atras, check;
+    private ImageView atras, check, etiqueta, recordatorio, archivo, papelera;
     private ShapeableImageView imagenNota;
     private EditText tituloNota, cuerpoNota;
-    private TextView fechaNota, textoEnlaceWeb;
+    private TextView fechaNota, textoEnlaceWeb, etiquetaNota;
     private LinearLayout layoutURLNota;
-    private String colorSeleccionado, imagenSeleccionada;
-    private AlertDialog dialogoAlerta;
+    private String colorSeleccionado, imagenSeleccionada, string_etiqueta;
+    private AlertDialog dialogoAñadirEnlace, dialogoAgregarEtiqueta, dialogoBorrarNota;
     private Nota notaExistente;
 
     @Override
@@ -68,6 +69,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crear_nota);
 
         asignarElementos();
+
         atras.setOnClickListener(v -> {
             onBackPressed();
             Toast.makeText(this, "Cambios descartados", Toast.LENGTH_SHORT).show();
@@ -91,6 +93,10 @@ public class CrearNotaActivity extends AppCompatActivity {
 
         existeNota();
 
+        // Funcionalidad de los iconos superiores
+        habilitarIconos();
+
+        // Layout para la edición de la nota
         habilitarEdicion();
     }
 
@@ -108,9 +114,16 @@ public class CrearNotaActivity extends AppCompatActivity {
         fechaNota.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.getDefault()).format(new Date()));
         layoutURLNota = findViewById(R.id.layoutURLNota);
         textoEnlaceWeb = findViewById(R.id.textoEnlaceWebNota);
+        etiquetaNota = findViewById(R.id.etiquetaNota);
         // Asignar color e imagen predeterminados (Si no puede generar comportamientos inesperados)
         colorSeleccionado = getResources().getString(0 + R.color.fondo_nota);
         imagenSeleccionada = "";
+        // Iconos superiores
+        etiqueta = findViewById(R.id.añadirEtiqueta);
+        recordatorio = findViewById(R.id.añadirRecordatorio);
+        archivo = findViewById(R.id.añadirArchivo);
+        papelera = findViewById(R.id.añadirPapelera);
+
     }
 
     /**
@@ -136,6 +149,25 @@ public class CrearNotaActivity extends AppCompatActivity {
                 textoEnlaceWeb.setText(notaExistente.getUrl());
                 layoutURLNota.setVisibility(View.VISIBLE);
             }
+
+            if (notaExistente.getEtiqueta() != null) {
+                etiquetaNota.setText(notaExistente.getEtiqueta());
+                etiquetaNota.setVisibility(View.VISIBLE);
+
+                if (etiquetaNota.getText().toString().equals("_archivada")) {
+                    etiqueta.setVisibility(View.GONE);
+                    etiquetaNota.setVisibility(View.GONE);
+                    archivo.setImageResource(R.drawable.ic_desarchivar);
+                }
+                if (etiquetaNota.getText().toString().equals("_papelera")) {
+                    etiqueta.setVisibility(View.GONE);
+                    etiquetaNota.setVisibility(View.GONE);
+                    papelera.setImageResource(R.drawable.ic_sacar_de_papelera);
+                }
+            }
+        } else {
+            archivo.setVisibility(View.GONE);
+            papelera.setVisibility(View.GONE);
         }
     }
 
@@ -159,6 +191,15 @@ public class CrearNotaActivity extends AppCompatActivity {
                 nota.setUrl(textoEnlaceWeb.getText().toString());
             }
 
+            if (etiquetaNota.getVisibility() == View.VISIBLE) {
+                nota.setEtiqueta(etiquetaNota.getText().toString());
+            } else {
+                if (etiquetaNota.getText().toString().equals("_archivada")
+                        || etiquetaNota.getText().toString().equals("_papelera")) {
+                    nota.setEtiqueta(etiquetaNota.getText().toString());
+                }
+            }
+
             // Si hemos seleccionado una nota existente, se le asigna el mismo id, ya que esta reemplazará a la existente
             if (notaExistente != null) {
                 nota.setId(notaExistente.getId());
@@ -176,9 +217,7 @@ public class CrearNotaActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(Void v) {
                     super.onPostExecute(v);
-                    Intent intent = new Intent();
-                    setResult(RESULT_OK, intent);
-                    Toast.makeText(getApplicationContext(), "Nota guardada", Toast.LENGTH_LONG).show();
+                    setResult(RESULT_OK, new Intent());
                     finish();
                 }
             }
@@ -292,6 +331,76 @@ public class CrearNotaActivity extends AppCompatActivity {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             mostrarDialogoURL();
         });
+
+        // Borrar nota
+        if (notaExistente != null) {
+            plantilla_editar_nota.findViewById(R.id.layoutEliminarNota).setVisibility(View.VISIBLE);
+            plantilla_editar_nota.findViewById(R.id.layoutEliminarNota).setOnClickListener(v -> {
+                bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+                mostrarDialogoBorrarNota();
+            });
+        }
+    }
+
+    /**
+     * Métodos y funciones de los iconos superiores.
+     */
+    @SuppressLint("SetTextI18n")
+    private void habilitarIconos() {
+        etiqueta.setOnClickListener(v -> {
+            mostrarDialogoEtiqueta();
+        });
+
+        etiquetaNota.setOnClickListener(v -> {
+            if (!etiquetaNota.getText().toString().isEmpty()) {
+                string_etiqueta = "";
+                etiquetaNota.setText("");
+                etiquetaNota.setVisibility(View.GONE);
+                Toast.makeText(this, "Etiqueta eliminada", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        recordatorio.setOnClickListener(v -> {
+            // TODO: Notificaciones
+        });
+
+        archivo.setOnClickListener(v -> {
+            if (etiquetaNota.getText().toString().equals("_papelera")) {
+                papelera.setImageResource(R.drawable.ic_papelera);
+            }
+            if (!etiquetaNota.getText().toString().equals("_archivada")) {
+                etiqueta.setVisibility(View.GONE);
+                etiquetaNota.setVisibility(View.GONE);
+                etiquetaNota.setText("_archivada");
+                archivo.setImageResource(R.drawable.ic_desarchivar);
+                Toast.makeText(this, "La nota se archivará", Toast.LENGTH_SHORT).show();
+            } else {
+                etiqueta.setVisibility(View.VISIBLE);
+                etiquetaNota.setVisibility(string_etiqueta == null || string_etiqueta.isEmpty() ? View.GONE : View.VISIBLE);
+                etiquetaNota.setText(string_etiqueta);
+                archivo.setImageResource(R.drawable.ic_archivo);
+                Toast.makeText(this, "La nota se ya no se archivará", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        papelera.setOnClickListener(v -> {
+            if (etiquetaNota.getText().toString().equals("_archivada")) {
+                archivo.setImageResource(R.drawable.ic_archivo);
+            }
+            if (!etiquetaNota.getText().toString().equals("_papelera")) {
+                etiqueta.setVisibility(View.GONE);
+                etiquetaNota.setVisibility(View.GONE);
+                etiquetaNota.setText("_papelera");
+                papelera.setImageResource(R.drawable.ic_sacar_de_papelera);
+                Toast.makeText(this, "La nota se moverá a la papelera", Toast.LENGTH_SHORT).show();
+            } else {
+                etiqueta.setVisibility(View.VISIBLE);
+                etiquetaNota.setVisibility(string_etiqueta == null || string_etiqueta.isEmpty() ? View.GONE : View.VISIBLE);
+                etiquetaNota.setText(string_etiqueta);
+                papelera.setImageResource(R.drawable.ic_papelera);
+                Toast.makeText(this, "La nota ya no se moverá a la papelera", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     /**
@@ -384,17 +493,17 @@ public class CrearNotaActivity extends AppCompatActivity {
      * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota
      */
     private void mostrarDialogoURL() {
-        if (dialogoAlerta == null) {
+        if (dialogoAñadirEnlace == null) {
             AlertDialog.Builder constructor = new AlertDialog.Builder(CrearNotaActivity.this);
             View vista = LayoutInflater.from(this).inflate(
                     R.layout.plantilla_enlace,
-                    findViewById(R.id.plantilla_enlace_contenedor));
+                    findViewById(R.id.plantilla_enlace));
             constructor.setView(vista);
 
-            dialogoAlerta = constructor.create();
+            dialogoAñadirEnlace = constructor.create();
 
-            if (dialogoAlerta.getWindow() != null) {
-                dialogoAlerta.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            if (dialogoAñadirEnlace.getWindow() != null) {
+                dialogoAñadirEnlace.getWindow().setBackgroundDrawable(new ColorDrawable(0));
             }
 
             EditText textoURL = vista.findViewById(R.id.textoURL);
@@ -408,12 +517,93 @@ public class CrearNotaActivity extends AppCompatActivity {
                 } else {
                     textoEnlaceWeb.setText(textoURL.getText().toString());
                     layoutURLNota.setVisibility(View.VISIBLE);
-                    dialogoAlerta.dismiss();
+                    dialogoAñadirEnlace.dismiss();
                 }
             });
 
-            vista.findViewById(R.id.botonCancelarURL).setOnClickListener(v -> dialogoAlerta.dismiss());
+            vista.findViewById(R.id.botonCancelarURL).setOnClickListener(v -> dialogoAñadirEnlace.dismiss());
         }
-        dialogoAlerta.show();
+        dialogoAñadirEnlace.show();
+    }
+
+    /**
+     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota
+     */
+    private void mostrarDialogoEtiqueta() {
+        if (dialogoAgregarEtiqueta == null) {
+            AlertDialog.Builder constructor = new AlertDialog.Builder(CrearNotaActivity.this);
+            View vista = LayoutInflater.from(this).inflate(
+                    R.layout.plantilla_etiqueta,
+                    findViewById(R.id.plantilla_etiqueta));
+            constructor.setView(vista);
+
+            dialogoAgregarEtiqueta = constructor.create();
+
+            if (dialogoAgregarEtiqueta.getWindow() != null) {
+                dialogoAgregarEtiqueta.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            EditText etiqueta = vista.findViewById(R.id.textoEtiqueta);
+            etiqueta.requestFocus();
+
+            vista.findViewById(R.id.botonAñadirEtiqueta).setOnClickListener(v -> {
+                if (etiqueta.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(CrearNotaActivity.this, "Inserta una etiqueta", Toast.LENGTH_SHORT).show();
+                } else {
+                    etiquetaNota.setText(etiqueta.getText().toString());
+                    string_etiqueta = etiqueta.getText().toString(); // variable comodín
+                    etiquetaNota.setVisibility(View.VISIBLE);
+                    dialogoAgregarEtiqueta.dismiss();
+                }
+            });
+
+            vista.findViewById(R.id.botonCancelarEtiqueta).setOnClickListener(v -> dialogoAgregarEtiqueta.dismiss());
+        }
+        dialogoAgregarEtiqueta.show();
+    }
+
+    /**
+     * Muestra un <i>AlertDialog</i> para confirmar el borrado de la nota y la borra.
+     */
+    private void mostrarDialogoBorrarNota() {
+        if (dialogoBorrarNota == null) {
+            AlertDialog.Builder constructor = new AlertDialog.Builder(CrearNotaActivity.this);
+            View vista = LayoutInflater.from(this).inflate(
+                    R.layout.plantilla_borrar_nota,
+                    findViewById(R.id.plantilla_borrar_nota));
+            constructor.setView(vista);
+
+            dialogoBorrarNota = constructor.create();
+
+            if (dialogoBorrarNota.getWindow() != null) {
+                dialogoBorrarNota.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            vista.findViewById(R.id.botonBorrarNota).setOnClickListener(v -> {
+                class TareaEliminarNota extends AsyncTask<Void, Void, Void> {
+
+                    @Override
+                    protected Void doInBackground(Void... voids) {
+                        BaseDeDatos.getBaseDeDatos(getApplicationContext()).dao_nota().eliminarNota(notaExistente);
+                        return null;
+                    }
+
+                    @Override
+                    protected void onPostExecute(Void vacio) {
+                        super.onPostExecute(vacio);
+                        Intent intent = new Intent();
+                        intent.putExtra("nota_borrada", true);
+                        setResult(RESULT_OK, intent);
+                        finish();
+                    }
+                }
+
+                new TareaEliminarNota().execute();
+
+            });
+            // Para cancelar...
+            vista.findViewById(R.id.botonCancelarBorrarNota).setOnClickListener(v -> dialogoBorrarNota.dismiss());
+        }
+        dialogoBorrarNota.show();
     }
 }

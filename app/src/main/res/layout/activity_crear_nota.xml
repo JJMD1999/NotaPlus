@@ -26,24 +26,54 @@
                 android:layout_marginStart="10dp"
                 android:layout_marginTop="20dp"
                 android:background="@drawable/ic_atras"
-                android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_lista"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/icono" />
 
-            <TextView
-                android:id="@+id/fechaNota"
-                android:layout_width="250dp"
+            <LinearLayout
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="30dp"
-                android:background="@android:color/transparent"
-                android:fontFamily="@font/roboto_regular"
-                android:gravity="center"
-                android:textSize="16sp"
+                android:layout_marginTop="20dp"
                 app:layout_constraintEnd_toStartOf="@+id/check"
                 app:layout_constraintStart_toEndOf="@+id/atras"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent">
 
+                <ImageView
+                    android:id="@+id/añadirEtiqueta"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_etiqueta"
+                    app:tint="@color/icono" />
+
+                <ImageView
+                    android:id="@+id/añadirRecordatorio"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_sin_notificacion"
+                    app:tint="@color/icono" />
+
+                <ImageView
+                    android:id="@+id/añadirArchivo"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:layout_marginEnd="10dp"
+                    android:src="@drawable/ic_archivo"
+                    app:tint="@color/icono" />
+
+                <ImageView
+                    android:id="@+id/añadirPapelera"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:layout_marginStart="10dp"
+                    android:src="@drawable/ic_papelera"
+                    app:tint="@color/icono" />
+
+            </LinearLayout>
 
             <ImageView
                 android:id="@+id/check"
@@ -52,17 +82,17 @@
                 android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@drawable/ic_check"
-                android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_lista"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintTop_toTopOf="parent"
+                app:tint="@color/icono" />
 
             <EditText
                 android:id="@+id/tituloNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="10dp"
-                android:layout_marginTop="30dp"
+                android:layout_marginTop="20dp"
                 android:layout_marginEnd="10dp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_bold"
@@ -73,7 +103,18 @@
                 android:textSize="24sp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/fechaNota" />
+                app:layout_constraintTop_toBottomOf="@+id/check" />
+
+            <TextView
+                android:id="@+id/fechaNota"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:background="@android:color/transparent"
+                android:fontFamily="@font/roboto_regular"
+                android:textSize="14sp"
+                app:layout_constraintEnd_toEndOf="@id/tituloNota"
+                app:layout_constraintStart_toStartOf="@+id/tituloNota"
+                app:layout_constraintTop_toBottomOf="@id/tituloNota" />
 
             <com.google.android.material.imageview.ShapeableImageView
                 android:id="@+id/imagenNota"
@@ -85,7 +126,7 @@
                 android:layout_marginBottom="10dp"
                 android:adjustViewBounds="true"
                 android:visibility="gone"
-                app:layout_constraintTop_toBottomOf="@id/tituloNota"
+                app:layout_constraintTop_toBottomOf="@id/fechaNota"
                 app:shapeAppearanceOverlay="@style/estiloImagenNota" />
 
             <ImageView
@@ -149,6 +190,19 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutURLNota" />
+
+            <TextView
+                android:id="@+id/etiquetaNota"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="10dp"
+                android:padding="10dp"
+                android:background="@drawable/fondo_nota"
+                android:fontFamily="@font/roboto_medium"
+                android:textSize="20sp"
+                android:visibility="gone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/cuerpoNota" />
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 
