@@ -24,4 +24,16 @@
             android:icon="@drawable/ic_opciones"
             android:title="@string/opciones" />
     </group>
+    <group android:id="@+id/grupo3"
+        android:checkableBehavior="none"
+        android:enabled="true">
+        <item
+            android:id="@+id/menu_codigo"
+            android:icon="@drawable/ic_codigo"
+            android:title="@string/codigo_fuente" />
+        <item
+            android:id="@+id/menu_licencia"
+            android:icon="@drawable/ic_licencia"
+            android:title="@string/licencia" />
+    </group>
 </menu>

@@ -6,7 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_gravity="center"
     android:layout_margin="10dp"
-    android:background="@drawable/fondo_nota">
+    android:background="@drawable/fondo_elementos">
 
     <ImageView
         android:id="@+id/imagenAñadirEtiqueta"

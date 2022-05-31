@@ -1,12 +1,20 @@
 <resources>
     <!-- Títulos de Preferencias -->
     <string name="opciones_de_visualizacion">Opciones de visualización</string>
-    <string name="ajustes_predeterminados">Ajustes predeterminados</string>
+    <string name="informacion_dispositivo">Información del dispositivo</string>
 
     <!-- Mensajes de Preferencias -->
+    <string name="titulo_tema">Tema</string>
     <string name="mensaje_tema_claro">Tema claro</string>
     <string name="mensaje_tema_oscuro">Tema oscuro</string>
+    <string name="titulo_disposicion_notas">Disposición de notas</string>
+    <string name="mensaje_columnas">Ver notas en columnas</string>
+    <string name="mensaje_filas">Ver notas en filas</string>
+    <string name="titulo_insertar_final">Insertar elementos al final</string>
+    <string name="modelo_dispositivo">Modelo del dispositivo</string>
+    <string name="version_android">Versión de Android</string>
 
+    <!-- Strings de la aplicación -->
     <string name="app_name">NotaPlus</string>
     <string name="mis_notas">Mis Notas</string>
     <string name="anadir_lista">Añadir lista</string>
@@ -24,15 +32,43 @@
     <string name="añadir_imagen">Añadir Imagen</string>
     <string name="añadir_url">Añadir URL</string>
     <string name="escribe_un_enlace_web">Escribe un enlace web…</string>
-    <string name="ok">OK</string>
+    <string name="ok" translatable="false">OK</string>
     <string name="opciones">Opciones</string>
-    <string name="title_activity_settings">SettingsActivity</string>
+    <string name="title_activity_settings" translatable="false">SettingsActivity</string>
     <string name="ajustes">Ajustes</string>
-    <string name="borrar_nota">Borrar Nota</string>
+    <string name="borrar_nota">Eliminar definitivamente</string>
     <string name="cancelar">CANCELAR</string>
     <string name="pregunta_eliminar_nota">¿Seguro que quieres eliminar la nota?</string>
     <string name="eliminar">ELIMINAR</string>
     <string name="buscar_notas">Buscar notas</string>
     <string name="agregar_etiqueta">Agregar etiqueta</string>
     <string name="escribe_un_nombre_para_la_etiqueta">Escribe un nombre para la etiqueta</string>
+    <string name="añadir_recordatorio">Añadir recordatorio</string>
+    <string name="hora">Hora</string>
+    <string name="fecha">Fecha</string>
+    <string name="canal_nombre">Nombre del canal</string>
+    <string name="canal_descripcion">Descripción del canal</string>
+    <string name="toast_nota_guardada">Nota guardada</string>
+    <string name="toast_nota_borrada">Nota borrada</string>
+    <string name="toast_nota_actualizada">Nota actualizada</string>
+    <string name="toast_error">Ha ocurrido un error</string>
+    <string name="toast_denegado">Permiso denegado</string>
+    <string name="toast_inserta_enlace_valido">Inserta un enlace web válido</string>
+    <string name="toast_inserta_enlace">Inserta un enlace web</string>
+    <string name="toast_inserta_fecha">Inserta una fecha</string>
+    <string name="toast_inserta_hora">Inserta una hora</string>
+    <string name="toast_recordatorio_creado">Recordatorio creado</string>
+    <string name="toast_cambios_descartados">Cambios descartados</string>
+    <string name="toast_titulo_vacio">El título no puede estar vacío</string>
+    <string name="toast_nota_vacia">La nota no puede estar vacía</string>
+    <string name="toast_etiqueta_eliminada">Etiqueta eliminada</string>
+    <string name="toast_nota_archivada">La nota se archivará</string>
+    <string name="toast_nota_desarchivada">La nota ya no se archivará</string>
+    <string name="toast_nota_papelera">La nota se moverá a la papelera</string>
+    <string name="toast_nota_papelera_2">La nota ya no se moverá a la papelera</string>
+    <string name="toast_inserta_etiqueta">Inserta una etiqueta</string>
+    <string name="codigo_fuente">Código fuente</string>
+    <string name="licencia">Licencia</string>
+    <string name="grabacion_de_voz">Grabación de voz</string>
+    <string name="voz_a_texto">Voz a texto</string>
 </resources>

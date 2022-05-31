@@ -9,7 +9,12 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
+import android.app.AlarmManager;
+import android.app.DatePickerDialog;
+import android.app.PendingIntent;
+import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
@@ -20,6 +25,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.speech.RecognizerIntent;
 import android.util.Patterns;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -29,6 +35,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.notaplus.receiver.Notificacion;
 import com.example.notaplus.R;
 import com.example.notaplus.bbdd.BaseDeDatos;
 import com.example.notaplus.tabla.Nota;
@@ -38,6 +45,7 @@ import com.google.android.material.imageview.ShapeableImageView;
 import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
@@ -47,20 +55,24 @@ import java.util.Locale;
 public class CrearNotaActivity extends AppCompatActivity {
 
     /**
-     * Solicitud de permiso para acceder alalmacenamiento.
+     * Solicitud de permiso para acceder al almacenamiento.
      */
     private static final int REQUEST_CODE_STORAGE_PERMISSION = 1;
+    private static final int SELECCIONAR_IMAGEN = 2;
     /**
-     * Solicitud de permiso para acceder a las imágenes.
+     * Solicitud de permiso para acceder al micrófono.
      */
-    private static final int REQUEST_CODE_SELECT_IMAGE = 2;
+    private static final int REQUEST_CODE_RECORD_AUDIO = 3;
+    private static final int VOZ_A_TEXTO = 4;
+    // Atributos
     private ImageView atras, check, etiqueta, recordatorio, archivo, papelera;
     private ShapeableImageView imagenNota;
     private EditText tituloNota, cuerpoNota;
     private TextView fechaNota, textoEnlaceWeb, etiquetaNota;
     private LinearLayout layoutURLNota;
     private String colorSeleccionado, imagenSeleccionada, string_etiqueta;
-    private AlertDialog dialogoAñadirEnlace, dialogoAgregarEtiqueta, dialogoBorrarNota;
+    private AlertDialog dialogoAñadirEnlace, dialogoAgregarEtiqueta, dialogoRecordatorio, dialogoBorrarNota;
+    private Calendar calendario;
     private Nota notaExistente;
 
     @Override
@@ -72,7 +84,7 @@ public class CrearNotaActivity extends AppCompatActivity {
 
         atras.setOnClickListener(v -> {
             onBackPressed();
-            Toast.makeText(this, "Cambios descartados", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_cambios_descartados, Toast.LENGTH_SHORT).show();
         }); // Vuelve a atrás
 
         check.setOnClickListener(v -> guardarNota()); // LLama a guardarNota() cuando se presiona
@@ -95,6 +107,22 @@ public class CrearNotaActivity extends AppCompatActivity {
 
         // Funcionalidad de los iconos superiores
         habilitarIconos();
+
+        // En caso de que se haya presionado el acceso rápido en la MainActivity
+        if (getIntent().getBooleanExtra("accesoDirecto", false)) {
+            String accion = getIntent().getStringExtra("accion");
+            if (accion.equals("imagen")) {
+                imagenSeleccionada = getIntent().getStringExtra("ruta");
+                imagenNota.setImageBitmap(BitmapFactory.decodeFile(imagenSeleccionada));
+                imagenNota.setVisibility(View.VISIBLE);
+                findViewById(R.id.borrarImagenNota).setVisibility(View.VISIBLE);
+            } else if (accion.equals("url")) {
+                textoEnlaceWeb.setText(getIntent().getStringExtra("url"));
+                layoutURLNota.setVisibility(View.VISIBLE);
+            } else if (accion.equals("voz")) {
+                cuerpoNota.setText(getIntent().getStringExtra("texto"));
+            }
+        }
 
         // Layout para la edición de la nota
         habilitarEdicion();
@@ -121,13 +149,14 @@ public class CrearNotaActivity extends AppCompatActivity {
         // Iconos superiores
         etiqueta = findViewById(R.id.añadirEtiqueta);
         recordatorio = findViewById(R.id.añadirRecordatorio);
+        recordatorio.setTag(R.drawable.ic_notificacion);
         archivo = findViewById(R.id.añadirArchivo);
         papelera = findViewById(R.id.añadirPapelera);
-
+        calendario = Calendar.getInstance();
     }
 
     /**
-     * Comprueba que la nota existe para cargar los datos de la misma
+     * Comprueba que la nota existe para cargar los datos de la misma.
      */
     private void existeNota() {
         if (getIntent().getBooleanExtra("existe_nota", false)) {
@@ -176,9 +205,7 @@ public class CrearNotaActivity extends AppCompatActivity {
      */
     private void guardarNota() {
         if (tituloNota.getText().toString().isEmpty()) {
-            Toast.makeText(this, "El título no puede estar vacío", Toast.LENGTH_LONG).show();
-        } else if (cuerpoNota.getText().toString().isEmpty()) {
-            Toast.makeText(this, "La nota no puede estar vacía", Toast.LENGTH_LONG).show();
+            Toast.makeText(this, R.string.toast_titulo_vacio, Toast.LENGTH_LONG).show();
         } else {
             Nota nota = new Nota();
             nota.setTitulo(tituloNota.getText().toString());
@@ -217,7 +244,20 @@ public class CrearNotaActivity extends AppCompatActivity {
                 @Override
                 protected void onPostExecute(Void v) {
                     super.onPostExecute(v);
-                    setResult(RESULT_OK, new Intent());
+                    Intent intent = new Intent();
+                    if (notaExistente != null) {
+                        if (etiquetaNota.getText().toString().equals("_archivada")
+                                || etiquetaNota.getText().toString().equals("_papelera")) {
+                            intent.putExtra("moverNota", true);
+                        }
+                        if (notaExistente.getEtiqueta() != null) {
+                             if (notaExistente.getEtiqueta().equals("_archivada")
+                                    || notaExistente.getEtiqueta().equals("_papelera")) {
+                                intent.putExtra("moverNota", true);
+                            }
+                        }
+                    }
+                    setResult(RESULT_OK, intent);
                     finish();
                 }
             }
@@ -316,7 +356,9 @@ public class CrearNotaActivity extends AppCompatActivity {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
 
             // Comprueba si tiene permiso para acceder al almacenamiento del dispositivo
-            if (ContextCompat.checkSelfPermission(getApplicationContext(), Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
+            if (ContextCompat.checkSelfPermission(
+                    getApplicationContext(),
+                    Manifest.permission.READ_EXTERNAL_STORAGE) != PackageManager.PERMISSION_GRANTED) {
                 ActivityCompat.requestPermissions(
                         CrearNotaActivity.this,
                         new String[]{Manifest.permission.READ_EXTERNAL_STORAGE},
@@ -330,6 +372,23 @@ public class CrearNotaActivity extends AppCompatActivity {
         plantilla_editar_nota.findViewById(R.id.layoutAñadirURL).setOnClickListener(v -> {
             bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
             mostrarDialogoURL();
+        });
+
+        // Permite pasar la voz a texto
+        plantilla_editar_nota.findViewById(R.id.layoutVozTexto).setOnClickListener(v -> {
+            bottomSheetBehavior.setState(BottomSheetBehavior.STATE_COLLAPSED);
+
+            // Comprueba si tiene permiso para acceder al micrófono del dispositivo
+            if (ContextCompat.checkSelfPermission(
+                    getApplicationContext(),
+                    Manifest.permission.RECORD_AUDIO) != PackageManager.PERMISSION_GRANTED) {
+                ActivityCompat.requestPermissions(
+                        CrearNotaActivity.this,
+                        new String[]{Manifest.permission.RECORD_AUDIO},
+                        REQUEST_CODE_RECORD_AUDIO);
+            } else {
+                vozATexto();
+            }
         });
 
         // Borrar nota
@@ -356,12 +415,20 @@ public class CrearNotaActivity extends AppCompatActivity {
                 string_etiqueta = "";
                 etiquetaNota.setText("");
                 etiquetaNota.setVisibility(View.GONE);
-                Toast.makeText(this, "Etiqueta eliminada", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_etiqueta_eliminada, Toast.LENGTH_SHORT).show();
             }
         });
 
         recordatorio.setOnClickListener(v -> {
-            // TODO: Notificaciones
+            Integer tag = (Integer) recordatorio.getTag();
+
+            if (tag == R.drawable.ic_notificacion) {
+                mostrarDialogoRecordatorio();
+            } else {
+                cancelarNotificacion();
+                recordatorio.setImageResource(R.drawable.ic_notificacion);
+                recordatorio.setTag(R.drawable.ic_notificacion);
+            }
         });
 
         archivo.setOnClickListener(v -> {
@@ -373,13 +440,13 @@ public class CrearNotaActivity extends AppCompatActivity {
                 etiquetaNota.setVisibility(View.GONE);
                 etiquetaNota.setText("_archivada");
                 archivo.setImageResource(R.drawable.ic_desarchivar);
-                Toast.makeText(this, "La nota se archivará", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_nota_archivada, Toast.LENGTH_SHORT).show();
             } else {
                 etiqueta.setVisibility(View.VISIBLE);
                 etiquetaNota.setVisibility(string_etiqueta == null || string_etiqueta.isEmpty() ? View.GONE : View.VISIBLE);
                 etiquetaNota.setText(string_etiqueta);
                 archivo.setImageResource(R.drawable.ic_archivo);
-                Toast.makeText(this, "La nota se ya no se archivará", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_nota_desarchivada, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -392,13 +459,13 @@ public class CrearNotaActivity extends AppCompatActivity {
                 etiquetaNota.setVisibility(View.GONE);
                 etiquetaNota.setText("_papelera");
                 papelera.setImageResource(R.drawable.ic_sacar_de_papelera);
-                Toast.makeText(this, "La nota se moverá a la papelera", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_nota_papelera, Toast.LENGTH_SHORT).show();
             } else {
                 etiqueta.setVisibility(View.VISIBLE);
                 etiquetaNota.setVisibility(string_etiqueta == null || string_etiqueta.isEmpty() ? View.GONE : View.VISIBLE);
                 etiquetaNota.setText(string_etiqueta);
                 papelera.setImageResource(R.drawable.ic_papelera);
-                Toast.makeText(this, "La nota ya no se moverá a la papelera", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, R.string.toast_nota_papelera_2, Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -409,9 +476,9 @@ public class CrearNotaActivity extends AppCompatActivity {
     private void seleccionarImagen() {
         Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
         try {
-            startActivityForResult(intent, REQUEST_CODE_SELECT_IMAGE);
+            startActivityForResult(intent, SELECCIONAR_IMAGEN);
         } catch (ActivityNotFoundException ex) {
-            Toast.makeText(this, "Ha ocurrido un error", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.toast_error, Toast.LENGTH_SHORT).show();
         }
     }
 
@@ -430,7 +497,13 @@ public class CrearNotaActivity extends AppCompatActivity {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
                 seleccionarImagen();
             } else {
-                Toast.makeText(this, "Permiso denegado", Toast.LENGTH_LONG).show();
+                Toast.makeText(this, R.string.toast_denegado, Toast.LENGTH_LONG).show();
+            }
+        } else if (requestCode == REQUEST_CODE_RECORD_AUDIO && grantResults.length > 0) {
+            if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                vozATexto();
+            } else {
+                Toast.makeText(this, R.string.toast_denegado, Toast.LENGTH_LONG).show();
             }
         }
     }
@@ -439,15 +512,15 @@ public class CrearNotaActivity extends AppCompatActivity {
      * Método para seleccionar una imagen de la galería e insertarla en la nota.
      *
      * @param requestCode Código de solicitud.
-     * @param resultCode  Código de resultado
-     * @param data        Intent
+     * @param resultCode  Código de resultado.
+     * @param data        Intent.
      */
     @Override
     protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
-        if (requestCode == REQUEST_CODE_SELECT_IMAGE && resultCode == RESULT_OK) {
-            Uri imagenUri = data.getData();
+        if (requestCode == SELECCIONAR_IMAGEN && resultCode == RESULT_OK) {
+            Uri imagenUri = data.getData(); // No da null
             if (imagenUri != null) {
                 try {
                     InputStream inputStream = getContentResolver().openInputStream(imagenUri);
@@ -463,14 +536,17 @@ public class CrearNotaActivity extends AppCompatActivity {
                     Toast.makeText(this, ex.getMessage(), Toast.LENGTH_SHORT).show();
                 }
             }
+        } else if (requestCode == VOZ_A_TEXTO && resultCode == RESULT_OK) {
+            String texto = cuerpoNota.getText() + " " + data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS).get(0);
+            cuerpoNota.setText(texto);
         }
     }
 
     /**
      * Devuelve la ruta de una imagen en formato <i>String</i>.
      *
-     * @param uri Uri de la imagen
-     * @return La ruta de la imagen
+     * @param uri Uri de la imagen.
+     * @return La ruta de la imagen.
      */
     private String getRutaImagen(Uri uri) {
         String ruta;
@@ -490,7 +566,7 @@ public class CrearNotaActivity extends AppCompatActivity {
     }
 
     /**
-     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota
+     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota.
      */
     private void mostrarDialogoURL() {
         if (dialogoAñadirEnlace == null) {
@@ -511,9 +587,9 @@ public class CrearNotaActivity extends AppCompatActivity {
 
             vista.findViewById(R.id.botonAñadirURL).setOnClickListener(v -> {
                 if (textoURL.getText().toString().isEmpty()) {
-                    Toast.makeText(CrearNotaActivity.this, "Inserta un enlace web", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearNotaActivity.this, R.string.toast_inserta_enlace, Toast.LENGTH_SHORT).show();
                 } else if (!Patterns.WEB_URL.matcher(textoURL.getText().toString()).matches()) {
-                    Toast.makeText(CrearNotaActivity.this, "Inserta un enlace web válido", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearNotaActivity.this, R.string.toast_inserta_enlace_valido, Toast.LENGTH_SHORT).show();
                 } else {
                     textoEnlaceWeb.setText(textoURL.getText().toString());
                     layoutURLNota.setVisibility(View.VISIBLE);
@@ -527,7 +603,7 @@ public class CrearNotaActivity extends AppCompatActivity {
     }
 
     /**
-     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota
+     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota.
      */
     private void mostrarDialogoEtiqueta() {
         if (dialogoAgregarEtiqueta == null) {
@@ -548,7 +624,7 @@ public class CrearNotaActivity extends AppCompatActivity {
 
             vista.findViewById(R.id.botonAñadirEtiqueta).setOnClickListener(v -> {
                 if (etiqueta.getText().toString().trim().isEmpty()) {
-                    Toast.makeText(CrearNotaActivity.this, "Inserta una etiqueta", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(CrearNotaActivity.this, R.string.toast_inserta_etiqueta, Toast.LENGTH_SHORT).show();
                 } else {
                     etiquetaNota.setText(etiqueta.getText().toString());
                     string_etiqueta = etiqueta.getText().toString(); // variable comodín
@@ -560,6 +636,131 @@ public class CrearNotaActivity extends AppCompatActivity {
             vista.findViewById(R.id.botonCancelarEtiqueta).setOnClickListener(v -> dialogoAgregarEtiqueta.dismiss());
         }
         dialogoAgregarEtiqueta.show();
+    }
+
+    /**
+     * Muestra un diálogo <i>pop-up</i> para introducir una dirección web a la nota.
+     */
+    private void mostrarDialogoRecordatorio() {
+        if (dialogoRecordatorio == null) {
+            AlertDialog.Builder constructor = new AlertDialog.Builder(CrearNotaActivity.this);
+            View vista = LayoutInflater.from(this).inflate(
+                    R.layout.plantilla_recordatorio,
+                    findViewById(R.id.plantilla_recordatorio));
+            constructor.setView(vista);
+
+            dialogoRecordatorio = constructor.create();
+
+            if (dialogoRecordatorio.getWindow() != null) {
+                dialogoRecordatorio.getWindow().setBackgroundDrawable(new ColorDrawable(0));
+            }
+
+            EditText fechaRecordatorio = vista.findViewById(R.id.fechaRecordatorio);
+            fechaRecordatorio.setText(MainActivity.tiempoActual(true));
+
+            // Diálogo para escoger fecha
+            fechaRecordatorio.setOnClickListener(v -> {
+                DatePickerDialog.OnDateSetListener dateSetListener = (view, año, mes, diaMes) -> {
+                    calendario.set(Calendar.YEAR, año);
+                    calendario.set(Calendar.MONTH, mes);
+                    calendario.set(Calendar.DAY_OF_MONTH, diaMes);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+                    fechaRecordatorio.setText(dateFormat.format(calendario.getTime()));
+                };
+                new DatePickerDialog(CrearNotaActivity.this, dateSetListener,
+                        calendario.get(Calendar.YEAR),
+                        calendario.get(Calendar.MONTH),
+                        calendario.get(Calendar.DAY_OF_MONTH)).show();
+            });
+
+            EditText horaRecordatorio = vista.findViewById(R.id.horaRecordatorio);
+            horaRecordatorio.setText(MainActivity.tiempoActual(false));
+
+            // Diálogo para escoger hora
+            vista.findViewById(R.id.horaRecordatorio).setOnClickListener(v -> {
+                TimePickerDialog.OnTimeSetListener timeSetListener = (view, horaDia, minuto) -> {
+                    calendario.set(Calendar.HOUR_OF_DAY, horaDia);
+                    calendario.set(Calendar.MINUTE, minuto);
+                    SimpleDateFormat dateFormat = new SimpleDateFormat("HH:mm", Locale.getDefault());
+                    horaRecordatorio.setText(dateFormat.format(calendario.getTime()));
+                };
+                new TimePickerDialog(CrearNotaActivity.this, timeSetListener,
+                        calendario.get(Calendar.HOUR_OF_DAY),
+                        calendario.get(Calendar.MINUTE), true).show();
+            });
+
+            vista.findViewById(R.id.botonAñadirRecordatorio).setOnClickListener(v -> {
+                if (fechaRecordatorio.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(CrearNotaActivity.this, R.string.toast_inserta_fecha, Toast.LENGTH_SHORT).show();
+                } else if (horaRecordatorio.getText().toString().trim().isEmpty()) {
+                    Toast.makeText(CrearNotaActivity.this, R.string.toast_inserta_hora, Toast.LENGTH_SHORT).show();
+                } else {
+                    crearNotificacion();
+                    dialogoRecordatorio.dismiss();
+                    recordatorio.setImageResource(R.drawable.ic_notificacion_2);
+                    recordatorio.setTag(R.drawable.ic_notificacion_2);
+                }
+            });
+
+            vista.findViewById(R.id.botonCancelarRecordatorio).setOnClickListener(v -> dialogoRecordatorio.dismiss());
+        }
+        dialogoRecordatorio.show();
+    }
+
+    /**
+     * Crea una notificación con los parámetros indicados.
+     */
+    private void crearNotificacion() {
+        Intent intent = new Intent(getApplicationContext(), Notificacion.class);
+
+        if (!tituloNota.getText().toString().isEmpty() && !cuerpoNota.getText().toString().isEmpty()) {
+            intent.putExtra(Notificacion.titulo, tituloNota.getText().toString());
+            intent.putExtra(Notificacion.mensaje, cuerpoNota.getText().toString());
+        }
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getApplicationContext(),
+                Notificacion.ID_NOTIFICACION,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Cuando notifica
+        AlarmManager alarma = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        long tiempo = calendario.getTimeInMillis();
+
+        alarma.setExactAndAllowWhileIdle(
+                AlarmManager.RTC_WAKEUP,
+                tiempo,
+                pendingIntent
+        );
+        Toast.makeText(this, R.string.toast_recordatorio_creado, Toast.LENGTH_SHORT).show();
+    }
+
+    /**
+     * Elimina la notificación creada.
+     */
+    private void cancelarNotificacion() {
+        Intent intent = new Intent(getApplicationContext(), Notificacion.class);
+
+        PendingIntent pendingIntent = PendingIntent.getBroadcast(
+                getApplicationContext(),
+                Notificacion.ID_NOTIFICACION,
+                intent,
+                PendingIntent.FLAG_IMMUTABLE | PendingIntent.FLAG_UPDATE_CURRENT);
+
+        // Cuando notifica
+        AlarmManager alarma = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        alarma.cancel(pendingIntent);
+    }
+
+    /**
+     * Permite convertir la voz a texto.
+     */
+    private void vozATexto() {
+        Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+        intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+        intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora");
+        startActivityForResult(intent, VOZ_A_TEXTO);
     }
 
     /**

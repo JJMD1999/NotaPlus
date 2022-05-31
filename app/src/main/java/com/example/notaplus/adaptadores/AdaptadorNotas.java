@@ -1,11 +1,13 @@
 package com.example.notaplus.adaptadores;
 
+import android.annotation.SuppressLint;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.graphics.drawable.GradientDrawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -22,7 +24,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 /**
- * Adaptador para las notas
+ * Adaptador para las notas.
  */
 public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHolder_Nota> {
 
@@ -71,13 +73,36 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
     }
 
     /**
-     * ViewHolder para las notas
+     * Filtro de búsqueda que permite visualizar las notas que contengan el título o el contenido indicado en el <i>SearchView</i>.
+     *
+     * @param busqueda Filtro de búsqueda.
+     */
+    @SuppressLint("NotifyDataSetChanged")
+    public void buscarNotas(String busqueda) {
+        if (busqueda.trim().isEmpty()) {
+            notas = copiaNotas;
+        } else {
+            ArrayList<Nota> listaTemporal = new ArrayList<>();
+            for (Nota nota : copiaNotas) {
+                if (nota.getTitulo().toLowerCase().contains(busqueda.toLowerCase())
+                        || nota.getTexto().toLowerCase().contains(busqueda.toLowerCase())
+                        || nota.getEtiqueta() != null && nota.getEtiqueta().toLowerCase().contains(busqueda.toLowerCase())) {
+                    listaTemporal.add(nota);
+                }
+            }
+            notas = listaTemporal;
+        }
+        this.notifyDataSetChanged();
+    }
+
+    /**
+     * ViewHolder para las notas.
      */
     static class ViewHolder_Nota extends RecyclerView.ViewHolder {
 
         TextView titulo, fecha;
         LinearLayout plantilla_nota;
-        ShapeableImageView imagen;
+        ImageView imagen;
 
         public ViewHolder_Nota(@NonNull View itemView) {
             super(itemView);
@@ -105,27 +130,5 @@ public class AdaptadorNotas extends RecyclerView.Adapter<AdaptadorNotas.ViewHold
                 imagen.setVisibility(View.GONE);
             }
         }
-    }
-
-    /**
-     * Filtro de búsqueda que permite visualizar las notas que contengan el título o el contenido indicado en el <i>SearchView</i>
-     *
-     * @param busqueda Filtro de búsqueda
-     */
-    public void buscarNotas(String busqueda) {
-        if (busqueda.trim().isEmpty()) {
-            notas = copiaNotas;
-        } else {
-            ArrayList<Nota> listaTemporal = new ArrayList<>();
-            for (Nota nota : copiaNotas) {
-                if (nota.getTitulo().toLowerCase().contains(busqueda.toLowerCase())
-                        || nota.getTexto().toLowerCase().contains(busqueda.toLowerCase())
-                        || nota.getEtiqueta() != null && nota.getEtiqueta().toLowerCase().contains(busqueda.toLowerCase())) {
-                    listaTemporal.add(nota);
-                }
-            }
-            notas = listaTemporal;
-        }
-        this.notifyDataSetChanged();
     }
 }

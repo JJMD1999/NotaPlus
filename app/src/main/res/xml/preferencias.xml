@@ -4,14 +4,27 @@
 
         <SwitchPreferenceCompat
             app:key="tema"
-            app:title="Tema"
+            app:title="@string/titulo_tema"
             app:summaryOff="@string/mensaje_tema_claro"
             app:summaryOn="@string/mensaje_tema_oscuro" />
 
+        <SwitchPreferenceCompat
+            app:key="columnas"
+            app:title="@string/titulo_disposicion_notas"
+            app:summaryOff="@string/mensaje_columnas"
+            app:summaryOn="@string/mensaje_filas" />
+
     </PreferenceCategory>
 
-    <PreferenceCategory app:title="@string/ajustes_predeterminados">
+    <PreferenceCategory app:title="@string/informacion_dispositivo">
 
+        <Preference
+            app:key="modelo"
+            app:title="@string/modelo_dispositivo" />
+
+        <Preference
+            app:key="version"
+            app:title="@string/version_android" />
 
     </PreferenceCategory>
 

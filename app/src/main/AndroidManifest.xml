@@ -3,14 +3,21 @@
     package="com.example.notaplus">
     <!-- Indica que la aplicación necesita permisos para acceder al almacenamiento -->
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <uses-permission android:name="android.permission.SCHEDULE_EXACT_ALARM" />
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_icono_app"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_icono_app_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.NotaPlus">
+        <receiver
+            android:name=".receiver.Notificacion"
+            android:enabled="true" />
+
         <activity
             android:name=".actividades.SettingsActivity"
             android:exported="false"

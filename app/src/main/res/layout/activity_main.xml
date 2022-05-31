@@ -48,7 +48,7 @@
             android:layout_marginStart="15dp"
             android:layout_marginTop="12dp"
             android:layout_marginEnd="15dp"
-            android:background="@drawable/fondo_nota"
+            android:background="@drawable/fondo_elementos"
             android:focusable="false"
             android:iconifiedByDefault="false"
             android:inputType="text"
@@ -70,19 +70,11 @@
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
 
-            <ImageView
-                android:id="@+id/añadirLista"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:background="@drawable/ic_checkbox"
-                android:backgroundTint="@color/icono"
-                android:contentDescription="@string/anadir_lista" />
 
             <ImageView
                 android:id="@+id/añadirImagen"
                 android:layout_width="36dp"
                 android:layout_height="36dp"
-                android:layout_marginStart="14dp"
                 android:background="@drawable/ic_imagen"
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_imagen" />
@@ -95,6 +87,24 @@
                 android:background="@drawable/ic_url"
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_enlace" />
+
+            <ImageView
+                android:id="@+id/vozATexto"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="14dp"
+                android:background="@drawable/ic_microfono"
+                android:backgroundTint="@color/icono"
+                android:contentDescription="@string/voz_a_texto" />
+
+            <ImageView
+                android:id="@+id/añadirRecordatorioInicio"
+                android:layout_width="36dp"
+                android:layout_height="36dp"
+                android:layout_marginStart="14dp"
+                android:background="@drawable/ic_notificacion"
+                android:backgroundTint="@color/icono"
+                android:contentDescription="@string/anadir_lista" />
 
         </LinearLayout>
 

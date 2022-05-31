@@ -14,6 +14,7 @@ import java.util.List;
  * Dao_Nota de la base de datos.
  */
 @Dao
+@SuppressWarnings("AndroidUnresolvedRoomSqlReference")
 public interface Dao_Nota {
 
     /**
@@ -21,9 +22,17 @@ public interface Dao_Nota {
      *
      * @return Los elementos de la base de datos
      */
-    @SuppressWarnings("AndroidUnresolvedRoomSqlReference")
-    @Query("SELECT * FROM notas ORDER BY id DESC") // Funciona bien
+    @Query("SELECT * FROM notas ORDER BY id DESC")
     List<Nota> getAll();
+
+    @Query("SELECT * FROM notas WHERE etiqueta IS NULL OR etiqueta NOT IN ('_archivada', '_papelera') ORDER BY id DESC")
+    List<Nota> getNotas();
+
+    @Query("SELECT * FROM notas WHERE etiqueta = '_archivada' ORDER BY id DESC")
+    List<Nota> getArchivadas();
+
+    @Query("SELECT * FROM notas WHERE etiqueta = '_papelera' ORDER BY id DESC")
+    List<Nota> getPapelera();
 
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     void insertarNota(Nota nota);

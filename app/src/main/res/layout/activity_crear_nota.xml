@@ -53,7 +53,8 @@
                     android:layout_height="40dp"
                     android:layout_marginStart="10dp"
                     android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_sin_notificacion"
+                    android:src="@drawable/ic_notificacion"
+                    android:tag=""
                     app:tint="@color/icono" />
 
                 <ImageView
@@ -125,6 +126,7 @@
                 android:layout_marginEnd="10dp"
                 android:layout_marginBottom="10dp"
                 android:adjustViewBounds="true"
+                android:scaleType="fitXY"
                 android:visibility="gone"
                 app:layout_constraintTop_toBottomOf="@id/fechaNota"
                 app:shapeAppearanceOverlay="@style/estiloImagenNota" />
@@ -184,7 +186,8 @@
                 android:gravity="top"
                 android:hint="@string/nota"
                 android:importantForAutofill="no"
-                android:inputType="text"
+                android:inputType="textMultiLine"
+                android:maxLines="50"
                 android:minHeight="100dp"
                 android:textSize="20sp"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -196,9 +199,9 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="10dp"
-                android:padding="10dp"
                 android:background="@drawable/fondo_nota"
                 android:fontFamily="@font/roboto_medium"
+                android:padding="10dp"
                 android:textSize="20sp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
