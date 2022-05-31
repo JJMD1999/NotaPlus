@@ -58,3 +58,18 @@
 - Corregido un problema con la interfaz al añadir una imagen a una nota.
 - Corregido un problema que, al asignar un color a una nota, este se asignaba a todas las notas anteriores si estas no tenían ningún color seleccionado.
 
+<br><hr><br>
+
+## Versión 4.0
+### Funciones añadidas
+
+- Añadida la función de eliminar una nota.
+- Añadida la opción de buscar y filtrar notas mediante un `SearchView`.
+- Añadida funcionalidad al Menú lateral. Ahora permite visuaizar notas archivadas y en la papelera.
+- Etiquetas agregadas a las notas. Ya se pueden añadir etiquetas a las notas y filtrar por ellas.
+
+### Cambios menores
+
+- Cambiados disposición de elementos visuales.
+- Agregados elementos visuales intuitivos para la edición de las notas.
+
