@@ -13,6 +13,8 @@
     <string name="titulo_insertar_final">Insertar elementos al final</string>
     <string name="modelo_dispositivo">Modelo del dispositivo</string>
     <string name="version_android">Versión de Android</string>
+    <string name="elige_tipo_fuente">Elige el tipo de fuente</string>
+    <string name="tipo_fuente">Tipo de fuente</string>
 
     <!-- Strings de la aplicación -->
     <string name="app_name">NotaPlus</string>

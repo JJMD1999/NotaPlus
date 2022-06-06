@@ -12,8 +12,8 @@
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_marginBottom="10dp"
-        android:paddingBottom="10dp">
+        android:layout_marginBottom="@dimen/_24sdp"
+        android:paddingBottom="@dimen/_10sdp">
 
         <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
@@ -21,10 +21,10 @@
 
             <ImageView
                 android:id="@+id/atras"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
                 android:background="@drawable/ic_atras"
                 android:contentDescription="@string/anadir_lista"
                 app:layout_constraintStart_toStartOf="parent"
@@ -34,43 +34,43 @@
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
+                android:layout_marginTop="@dimen/_16sdp"
                 app:layout_constraintEnd_toStartOf="@+id/check"
                 app:layout_constraintStart_toEndOf="@+id/atras"
                 app:layout_constraintTop_toTopOf="parent">
 
                 <ImageView
                     android:id="@+id/añadirEtiqueta"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:src="@drawable/ic_etiqueta"
                     app:tint="@color/icono" />
 
                 <ImageView
                     android:id="@+id/añadirRecordatorio"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:src="@drawable/ic_notificacion"
                     android:tag=""
                     app:tint="@color/icono" />
 
                 <ImageView
                     android:id="@+id/añadirArchivo"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
-                    android:layout_marginEnd="10dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
+                    android:layout_marginEnd="@dimen/_6sdp"
                     android:src="@drawable/ic_archivo"
                     app:tint="@color/icono" />
 
                 <ImageView
                     android:id="@+id/añadirPapelera"
-                    android:layout_width="40dp"
-                    android:layout_height="40dp"
-                    android:layout_marginStart="10dp"
+                    android:layout_width="@dimen/_30sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_marginStart="@dimen/_6sdp"
                     android:src="@drawable/ic_papelera"
                     app:tint="@color/icono" />
 
@@ -78,10 +78,10 @@
 
             <ImageView
                 android:id="@+id/check"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:background="@drawable/ic_check"
                 android:contentDescription="@string/anadir_lista"
                 app:layout_constraintEnd_toEndOf="parent"
@@ -92,16 +92,15 @@
                 android:id="@+id/tituloNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:background="@android:color/transparent"
-                android:fontFamily="@font/roboto_bold"
                 android:hint="@string/tituloNota"
                 android:importantForAutofill="no"
                 android:inputType="text"
-                android:minHeight="48dp"
-                android:textSize="24sp"
+                android:minHeight="@dimen/_40sdp"
+                android:textSize="@dimen/_20ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/check" />
@@ -112,7 +111,7 @@
                 android:layout_height="wrap_content"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_regular"
-                android:textSize="14sp"
+                android:textSize="@dimen/_12ssp"
                 app:layout_constraintEnd_toEndOf="@id/tituloNota"
                 app:layout_constraintStart_toStartOf="@+id/tituloNota"
                 app:layout_constraintTop_toBottomOf="@id/tituloNota" />
@@ -121,10 +120,7 @@
                 android:id="@+id/imagenNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
-                android:layout_marginBottom="10dp"
+                android:layout_margin="@dimen/_8sdp"
                 android:adjustViewBounds="true"
                 android:scaleType="fitXY"
                 android:visibility="gone"
@@ -133,10 +129,10 @@
 
             <ImageView
                 android:id="@+id/borrarImagenNota"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="10dp"
-                android:layout_marginEnd="10dp"
+                android:layout_width="@dimen/_24sdp"
+                android:layout_height="@dimen/_24sdp"
+                android:layout_marginTop="@dimen/_8sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:src="@drawable/ic_borrar"
                 android:visibility="gone"
                 app:layout_constraintEnd_toEndOf="@id/imagenNota"
@@ -147,9 +143,9 @@
                 android:id="@+id/layoutURLNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:gravity="center_vertical"
                 android:orientation="horizontal"
                 android:visibility="gone"
@@ -162,13 +158,13 @@
                     android:layout_weight="1"
                     android:autoLink="web"
                     android:fontFamily="@font/roboto_regular"
-                    android:textSize="20sp"
+                    android:textSize="@dimen/_18ssp"
                     app:layout_constraintTop_toBottomOf="@id/layoutURLNota" />
 
                 <ImageView
                     android:id="@+id/borrarEnlaceWebNota"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
+                    android:layout_width="@dimen/_24sdp"
+                    android:layout_height="@dimen/_24sdp"
                     android:src="@drawable/ic_borrar"
                     app:tint="@color/rojo" />
 
@@ -178,9 +174,9 @@
                 android:id="@+id/cuerpoNota"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="10dp"
-                android:layout_marginTop="20dp"
-                android:layout_marginEnd="10dp"
+                android:layout_marginStart="@dimen/_8sdp"
+                android:layout_marginTop="@dimen/_16sdp"
+                android:layout_marginEnd="@dimen/_8sdp"
                 android:background="@android:color/transparent"
                 android:fontFamily="@font/roboto_regular"
                 android:gravity="top"
@@ -188,8 +184,8 @@
                 android:importantForAutofill="no"
                 android:inputType="textMultiLine"
                 android:maxLines="50"
-                android:minHeight="100dp"
-                android:textSize="20sp"
+                android:minHeight="@dimen/_80sdp"
+                android:textSize="@dimen/_16ssp"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/layoutURLNota" />
@@ -198,11 +194,11 @@
                 android:id="@+id/etiquetaNota"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_margin="10dp"
+                android:layout_margin="@dimen/_8sdp"
                 android:background="@drawable/fondo_nota"
                 android:fontFamily="@font/roboto_medium"
-                android:padding="10dp"
-                android:textSize="20sp"
+                android:padding="@dimen/_8sdp"
+                android:textSize="@dimen/_18ssp"
                 android:visibility="gone"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/cuerpoNota" />

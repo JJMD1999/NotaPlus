@@ -6,6 +6,7 @@ import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
 import androidx.core.content.ContextCompat;
+import androidx.preference.PreferenceManager;
 
 import android.Manifest;
 import android.annotation.SuppressLint;
@@ -16,6 +17,7 @@ import android.app.TimePickerDialog;
 import android.content.ActivityNotFoundException;
 import android.content.Context;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
@@ -81,6 +83,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         setContentView(R.layout.activity_crear_nota);
 
         asignarElementos();
+        asignarFuentes();
 
         atras.setOnClickListener(v -> {
             onBackPressed();
@@ -139,7 +142,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         imagenNota = findViewById(R.id.imagenNota);
         fechaNota = findViewById(R.id.fechaNota);
         // Establece la hora actual a la fecha. (20/03/2022 17:02 PM)
-        fechaNota.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm a", Locale.getDefault()).format(new Date()));
+        fechaNota.setText(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(new Date()));
         layoutURLNota = findViewById(R.id.layoutURLNota);
         textoEnlaceWeb = findViewById(R.id.textoEnlaceWebNota);
         etiquetaNota = findViewById(R.id.etiquetaNota);
@@ -210,7 +213,7 @@ public class CrearNotaActivity extends AppCompatActivity {
             Nota nota = new Nota();
             nota.setTitulo(tituloNota.getText().toString());
             nota.setTexto(cuerpoNota.getText().toString());
-            nota.setFecha(fechaNota.getText().toString());
+            nota.setFecha(new SimpleDateFormat("dd/MM/yyyy HH:mm", Locale.getDefault()).format(new Date()));
             nota.setColor(colorSeleccionado);
             nota.setImagen(imagenSeleccionada);
 
@@ -761,6 +764,38 @@ public class CrearNotaActivity extends AppCompatActivity {
         intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL, RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
         intent.putExtra(RecognizerIntent.EXTRA_PROMPT, "Habla ahora");
         startActivityForResult(intent, VOZ_A_TEXTO);
+    }
+
+    /**
+     * Asigna un tipo de fuente según lo especificado en las opciones.
+     */
+    private void asignarFuentes() {
+        SharedPreferences preferencias = PreferenceManager.getDefaultSharedPreferences(this);
+        String fuente = preferencias.getString(SettingsActivity.KEY_PREF_FUENTE, "roboto");
+
+        switch (fuente) {
+            case "roboto":
+                tituloNota.setTypeface(MainActivity.fuentes.get("roboto_bold"));
+                cuerpoNota.setTypeface(MainActivity.fuentes.get("roboto_regular"));
+                fechaNota.setTypeface(MainActivity.fuentes.get("roboto_regular"));
+                textoEnlaceWeb.setTypeface(MainActivity.fuentes.get("roboto_regular"));
+                etiquetaNota.setTypeface(MainActivity.fuentes.get("roboto_medium"));
+                break;
+            case "alegreya":
+                tituloNota.setTypeface(MainActivity.fuentes.get("alegreya_sans_bold"));
+                cuerpoNota.setTypeface(MainActivity.fuentes.get("alegreya_sans_regular"));
+                fechaNota.setTypeface(MainActivity.fuentes.get("alegreya_sans_regular"));
+                textoEnlaceWeb.setTypeface(MainActivity.fuentes.get("alegreya_sans_regular"));
+                etiquetaNota.setTypeface(MainActivity.fuentes.get("alegreya_sans_medium"));
+                break;
+            case "prompt":
+                tituloNota.setTypeface(MainActivity.fuentes.get("prompt_bold"));
+                cuerpoNota.setTypeface(MainActivity.fuentes.get("prompt_regular"));
+                fechaNota.setTypeface(MainActivity.fuentes.get("prompt_regular"));
+                textoEnlaceWeb.setTypeface(MainActivity.fuentes.get("prompt_regular"));
+                etiquetaNota.setTypeface(MainActivity.fuentes.get("prompt_medium"));
+                break;
+        }
     }
 
     /**

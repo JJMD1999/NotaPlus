@@ -1,12 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/drawer_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:fitsSystemWindows="true">
 
-    <androidx.constraintlayout.widget.ConstraintLayout xmlns:tools="http://schemas.android.com/tools"
+    <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:background="@color/fondo"
@@ -16,16 +17,16 @@
             android:id="@+id/barraSuperior"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_16sdp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
             <ImageView
                 android:id="@+id/imagenMenu"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:contentDescription="@string/modo"
                 android:src="@drawable/ic_menu" />
 
@@ -33,11 +34,11 @@
                 android:id="@+id/tituloAplicacion"
                 android:layout_width="wrap_content"
                 android:layout_height="match_parent"
-                android:layout_marginStart="14dp"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:fontFamily="@font/roboto_bold"
                 android:gravity="center_vertical"
                 android:text="@string/mis_notas"
-                android:textSize="28sp" />
+                android:textSize="@dimen/_22ssp" />
 
         </LinearLayout>
 
@@ -45,9 +46,9 @@
             android:id="@+id/barraDeBusqueda"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginStart="15dp"
-            android:layout_marginTop="12dp"
-            android:layout_marginEnd="15dp"
+            android:layout_marginStart="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_marginEnd="@dimen/_12sdp"
             android:background="@drawable/fondo_elementos"
             android:focusable="false"
             android:iconifiedByDefault="false"
@@ -57,7 +58,6 @@
             android:searchIcon="@drawable/ic_buscar"
             app:layout_constraintTop_toBottomOf="@id/barraSuperior" />
 
-        <!--Todavía sin funcionalidad-->
         <LinearLayout
             android:id="@+id/barraDeAcciones"
             android:layout_width="match_parent"
@@ -65,7 +65,7 @@
             android:background="@color/enfasis"
             android:gravity="center_vertical"
             android:orientation="horizontal"
-            android:padding="16dp"
+            android:padding="@dimen/_10sdp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent">
@@ -73,35 +73,35 @@
 
             <ImageView
                 android:id="@+id/añadirImagen"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
                 android:background="@drawable/ic_imagen"
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_imagen" />
 
             <ImageView
                 android:id="@+id/añadirURL"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="14dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:background="@drawable/ic_url"
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_enlace" />
 
             <ImageView
                 android:id="@+id/vozATexto"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="14dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:background="@drawable/ic_microfono"
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/voz_a_texto" />
 
             <ImageView
                 android:id="@+id/añadirRecordatorioInicio"
-                android:layout_width="36dp"
-                android:layout_height="36dp"
-                android:layout_marginStart="14dp"
+                android:layout_width="@dimen/_30sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_marginStart="@dimen/_12sdp"
                 android:background="@drawable/ic_notificacion"
                 android:backgroundTint="@color/icono"
                 android:contentDescription="@string/anadir_lista" />
@@ -112,7 +112,7 @@
             android:id="@+id/recyclerViewNotas"
             android:layout_width="match_parent"
             android:layout_height="0dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="@dimen/_16sdp"
             app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
@@ -122,16 +122,14 @@
             android:id="@+id/añadirNota"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:layout_marginEnd="@dimen/_20sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             android:clickable="true"
             android:contentDescription="@string/anadir_nota"
             app:backgroundTint="@color/enfasis"
             app:layout_constraintBottom_toTopOf="@+id/barraDeAcciones"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.96"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/barraSuperior"
-            app:layout_constraintVertical_bias="0.972"
-            app:maxImageSize="@android:dimen/app_icon_size"
+            app:maxImageSize="@dimen/_40sdp"
             app:srcCompat="@android:drawable/ic_input_add"
             app:tint="@color/icono" />
 

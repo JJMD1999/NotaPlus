@@ -15,17 +15,25 @@
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/fondo_nota.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_archivo.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_atras.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_borrar_definitivamente.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_buscar.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_check.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_checkbox.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_claro.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_codigo.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_etiqueta.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_imagen.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_launcher_background.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_licencia.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_menu.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_microfono.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_notas.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_notificacion.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_opciones.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_oscuro.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_papelera.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/drawable/ic_url.xml" value="0.2595" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/font/alegreya_sans_regular.xml" value="0.284375" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/font/roboto.xml" value="0.284375" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/font/ubuntu.xml" value="0.284375" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/activity_crear_nota.xml" value="0.264" />
@@ -33,6 +41,7 @@
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/activity_settings.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/fragment_blank.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/fragment_notas.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_agregar_imagen.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_borrar_nota.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_editar_nota.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/layout/plantilla_encabezado.xml" value="0.25416666666666665" />
@@ -47,6 +56,7 @@
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/mipmap-anydpi-v26/ic_icono_app.xml" value="0.2595" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/mipmap-anydpi-v26/ic_icono_app_round.xml" value="0.124" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/xml/preferencias.xml" value="0.25416666666666665" />
+        <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/xml/provider_paths.xml" value="0.25416666666666665" />
         <entry key="..\:/Users/julio/AndroidStudioProjects/NotaPlus/app/src/main/res/xml/root_preferences.xml" value="0.25416666666666665" />
       </map>
     </option>

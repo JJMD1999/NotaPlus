@@ -1,18 +1,27 @@
-<PreferenceScreen xmlns:app="http://schemas.android.com/apk/res-auto">
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
     <PreferenceCategory app:title="@string/opciones_de_visualizacion">
 
         <SwitchPreferenceCompat
             app:key="tema"
-            app:title="@string/titulo_tema"
             app:summaryOff="@string/mensaje_tema_claro"
-            app:summaryOn="@string/mensaje_tema_oscuro" />
+            app:summaryOn="@string/mensaje_tema_oscuro"
+            app:title="@string/titulo_tema" />
 
         <SwitchPreferenceCompat
             app:key="columnas"
-            app:title="@string/titulo_disposicion_notas"
             app:summaryOff="@string/mensaje_columnas"
-            app:summaryOn="@string/mensaje_filas" />
+            app:summaryOn="@string/mensaje_filas"
+            app:title="@string/titulo_disposicion_notas" />
+
+        <ListPreference
+            android:defaultValue="roboto"
+            android:entryValues="@array/fuentes_valor"
+            app:entries="@array/fuentes"
+            app:key="fuente"
+            app:summary="@string/elige_tipo_fuente"
+            app:title="@string/tipo_fuente" />
 
     </PreferenceCategory>
 

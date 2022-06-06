@@ -5,8 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="12dp"
-    android:layout_marginTop="12dp"
-    android:layout_marginEnd="12dp"
+    android:layout_marginTop="@dimen/_10sdp"
+    android:layout_marginEnd="@dimen/_10sdp"
     android:background="@drawable/fondo_nota"
     android:orientation="vertical">
 
@@ -23,20 +23,32 @@
         android:id="@+id/titulo"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:fontFamily="@font/roboto_bold"
-        android:textSize="20sp" />
+        android:textSize="@dimen/_16ssp" />
 
     <TextView
         android:id="@+id/fecha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginStart="10dp"
-        android:layout_marginTop="10dp"
-        android:layout_marginEnd="10dp"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
         android:fontFamily="@font/roboto_medium"
-        android:textSize="14sp" />
+        android:textSize="@dimen/_12ssp" />
+
+    <TextView
+        android:id="@+id/textoNota"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="@dimen/_8sdp"
+        android:layout_marginBottom="@dimen/_4sdp"
+        android:layout_marginEnd="@dimen/_8sdp"
+        android:fontFamily="@font/roboto_regular"
+        android:textSize="@dimen/_12ssp"
+        android:visibility="gone"/>
 
 </LinearLayout>

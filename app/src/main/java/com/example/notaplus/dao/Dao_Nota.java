@@ -40,4 +40,5 @@ public interface Dao_Nota {
     @Delete
     void eliminarNota(Nota nota);
 
+
 }

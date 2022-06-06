@@ -65,4 +65,6 @@
     <string name="grabacion_de_voz">Voice recorder</string>
     <string name="version_android">Android version</string>
     <string name="voz_a_texto">Voice to text</string>
+    <string name="elige_tipo_fuente">Choose type of font</string>
+    <string name="tipo_fuente">Type of font</string>
 </resources>

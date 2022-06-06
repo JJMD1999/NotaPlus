@@ -24,11 +24,15 @@ public class SettingsActivity extends AppCompatActivity {
      */
     public static final String KEY_PREF_DISPOSICION = "columnas";
     /**
+     * Tipo de fuente de las notas
+     */
+    public static final String KEY_PREF_FUENTE = "fuente";
+    /**
      * Modelo del dispositivo
      */
     public static final String KEY_PREF_MODELO = "modelo";
     /**
-     * Modelo del dispositivo
+     * Versión del dispositivo
      */
     public static final String KEY_PREF_VERSION = "version";
 

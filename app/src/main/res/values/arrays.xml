@@ -9,4 +9,17 @@
         <item>reply</item>
         <item>reply_all</item>
     </string-array>
+
+    <string-array name="fuentes" translatable="false">
+        <item>Roboto</item>
+        <item>Alegreya Sans</item>
+        <item>Prompt</item>
+    </string-array>
+
+    <string-array name="fuentes_valor" translatable="false">
+        <item>roboto</item>
+        <item>alegreya</item>
+        <item>prompt</item>
+    </string-array>
+
 </resources>

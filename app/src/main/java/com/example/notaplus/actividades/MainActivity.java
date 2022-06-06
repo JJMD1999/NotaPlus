@@ -27,6 +27,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
+import android.graphics.Typeface;
 import android.graphics.drawable.ColorDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -52,17 +53,20 @@ import com.example.notaplus.tabla.Nota;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.android.material.navigation.NavigationView;
 
+import java.lang.reflect.Type;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Locale;
+import java.util.Map;
 
 /**
  * Activity principal. Desde aquí se visualizan las notas guardadas.
  *
  * @author Julio José Meijueiro Dacosta
- * @version 5.0
+ * @version 6.0
  */
 public class MainActivity extends AppCompatActivity implements ListenerNotas {
 
@@ -75,8 +79,10 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
     // Atributos
     @SuppressLint("StaticFieldLeak")
     public static Context contexto;
+    public static Map<String, Typeface> fuentes;
     public AdaptadorNotas adaptadorNotas;
     private DrawerLayout drawerLayout;
+    private NavigationView navigationView;
     private List<Nota> listaNotas = new ArrayList<>();
     private RecyclerView recyclerViewNotas;
     private SearchView barraDeBusqueda;
@@ -111,6 +117,7 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        recogerFuentes();
         cargarPreferencias();
         crearCanalDeNotificacion();
 
@@ -133,6 +140,22 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
         // Búsqueda de notas
         busquedaNotas();
 
+    }
+
+    /**
+     * Recoge en un Map (lista clave-valor) los tipos de fuente disponibles.
+     */
+    private void recogerFuentes() {
+        fuentes = new HashMap<>();
+        fuentes.put("roboto_bold", getResources().getFont(R.font.roboto_bold));
+        fuentes.put("roboto_medium", getResources().getFont(R.font.roboto_medium));
+        fuentes.put("roboto_regular", getResources().getFont(R.font.roboto_regular));
+        fuentes.put("alegreya_sans_bold", getResources().getFont(R.font.alegreya_sans_bold));
+        fuentes.put("alegreya_sans_medium", getResources().getFont(R.font.alegreya_sans_medium));
+        fuentes.put("alegreya_sans_regular", getResources().getFont(R.font.alegreya_sans_regular));
+        fuentes.put("prompt_bold", getResources().getFont(R.font.prompt_bold));
+        fuentes.put("prompt_medium", getResources().getFont(R.font.prompt_medium));
+        fuentes.put("prompt_regular", getResources().getFont(R.font.prompt_regular));
     }
 
     /**
@@ -278,7 +301,7 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
     private void menuDrawer() {
         drawerLayout = findViewById(R.id.drawer_layout);
 
-        NavigationView navigationView = findViewById(R.id.navigationView);
+        navigationView = findViewById(R.id.navigationView);
         // Anchura del NavigationView
         ViewGroup.LayoutParams params = navigationView.getLayoutParams();
         params.width = (int) (getResources().getDisplayMetrics().widthPixels / 1.5);
@@ -377,6 +400,11 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
                                 new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
                     }
                     recyclerViewNotas.setAdapter(adaptadorNotas);
+                    break;
+                case SettingsActivity.KEY_PREF_FUENTE:
+                    recyclerViewNotas.setAdapter(adaptadorNotas);
+                    recyclerViewNotas.smoothScrollToPosition(0);
+                    navigationView.getMenu().getItem(0).setChecked(true);
                     break;
             }
         };
