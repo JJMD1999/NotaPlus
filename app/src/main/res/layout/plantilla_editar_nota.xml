@@ -135,13 +135,13 @@
             android:layout_weight="1">
 
             <View
-                android:id="@+id/view_amarillo"
+                android:id="@+id/view_verde"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
-                android:background="@drawable/color_nota_amarillo" />
+                android:background="@drawable/color_nota_verde" />
 
             <ImageView
-                android:id="@+id/imagenColorAmarillo"
+                android:id="@+id/imagenColorVerde"
                 android:layout_width="@dimen/_40sdp"
                 android:layout_height="@dimen/_40sdp"
                 android:padding="@dimen/_5sdp" />

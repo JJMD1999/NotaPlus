@@ -286,7 +286,7 @@ public class CrearNotaActivity extends AppCompatActivity {
         ImageView imagenColorAzul = plantilla_editar_nota.findViewById(R.id.imagenColorAzul);
         ImageView imagenColorRojo = plantilla_editar_nota.findViewById(R.id.imagenColorRojo);
         ImageView imagenColorNaranja = plantilla_editar_nota.findViewById(R.id.imagenColorNaranja);
-        ImageView imagenColorAmarillo = plantilla_editar_nota.findViewById(R.id.imagenColorAmarillo);
+        ImageView imagenColorVerde = plantilla_editar_nota.findViewById(R.id.imagenColorVerde);
 
         // Al clicar en un color (En este caso el predeterminado)
         plantilla_editar_nota.findViewById(R.id.view_color_predeterminado).setOnClickListener(v -> {
@@ -295,7 +295,7 @@ public class CrearNotaActivity extends AppCompatActivity {
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(0);
             imagenColorNaranja.setImageResource(0);
-            imagenColorAmarillo.setImageResource(0);
+            imagenColorVerde.setImageResource(0);
         });
 
         plantilla_editar_nota.findViewById(R.id.view_azul).setOnClickListener(v -> {
@@ -304,7 +304,7 @@ public class CrearNotaActivity extends AppCompatActivity {
             imagenColorAzul.setImageResource(R.drawable.ic_check);
             imagenColorRojo.setImageResource(0);
             imagenColorNaranja.setImageResource(0);
-            imagenColorAmarillo.setImageResource(0);
+            imagenColorVerde.setImageResource(0);
         });
 
         plantilla_editar_nota.findViewById(R.id.view_rojo).setOnClickListener(v -> {
@@ -313,7 +313,7 @@ public class CrearNotaActivity extends AppCompatActivity {
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(R.drawable.ic_check);
             imagenColorNaranja.setImageResource(0);
-            imagenColorAmarillo.setImageResource(0);
+            imagenColorVerde.setImageResource(0);
         });
 
         plantilla_editar_nota.findViewById(R.id.view_naranja).setOnClickListener(v -> {
@@ -322,16 +322,16 @@ public class CrearNotaActivity extends AppCompatActivity {
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(0);
             imagenColorNaranja.setImageResource(R.drawable.ic_check);
-            imagenColorAmarillo.setImageResource(0);
+            imagenColorVerde.setImageResource(0);
         });
 
-        plantilla_editar_nota.findViewById(R.id.view_amarillo).setOnClickListener(v -> {
-            colorSeleccionado = "#E1E10D";
+        plantilla_editar_nota.findViewById(R.id.view_verde).setOnClickListener(v -> {
+            colorSeleccionado = "#6DDA0F";
             imagenColorPredeterminado.setImageResource(0);
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(0);
             imagenColorNaranja.setImageResource(0);
-            imagenColorAmarillo.setImageResource(R.drawable.ic_check);
+            imagenColorVerde.setImageResource(R.drawable.ic_check);
         });
 
         // En caso de mostrar una nota existente
@@ -346,8 +346,8 @@ public class CrearNotaActivity extends AppCompatActivity {
                 case "#F36C05":
                     plantilla_editar_nota.findViewById(R.id.view_naranja).performClick();
                     break;
-                case "#E1E10D":
-                    plantilla_editar_nota.findViewById(R.id.view_amarillo).performClick();
+                case "#6DDA0F":
+                    plantilla_editar_nota.findViewById(R.id.view_verde).performClick();
                     break;
                 default:
                     plantilla_editar_nota.findViewById(R.id.view_color_predeterminado).performClick();

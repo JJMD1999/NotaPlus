@@ -195,7 +195,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_margin="@dimen/_8sdp"
-                android:background="@drawable/fondo_nota"
+                android:background="@drawable/fondo_elementos"
                 android:fontFamily="@font/roboto_medium"
                 android:padding="@dimen/_8sdp"
                 android:textSize="@dimen/_18ssp"
