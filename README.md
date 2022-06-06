@@ -91,4 +91,14 @@
 - Uso de más cadenas desde *values/strings.xml* en vez de cadenas de texto explícitas.
 - Corregido un problema que impedía actualizar la vista de las notas al enviar una nota a archivo o a la papelera y viceversa.
 
+<br><hr><br>
 
+## Versión 6.0
+### Funciones añadidas
+
+- Añadida adaptabilidad de tamaño para distintos dispositivos.
+- Añadidos tipos de fuentes.
+
+### Cambios menores
+
+- Mayor legibilidad en el código.
