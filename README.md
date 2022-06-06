@@ -73,3 +73,22 @@
 - Cambiados disposición de elementos visuales.
 - Agregados elementos visuales intuitivos para la edición de las notas.
 
+<br><hr><br>
+
+## Versión 5.0
+### Funciones añadidas
+
+- Añadida la función de voz a texto
+- Añadidas las funciones de los accesos rápidos.
+- Añadidos los recordatorios con notificaciones.
+- Traducción al `inglés` añadida.
+
+### Cambios menores
+
+- Agregadas consultas adicionales al ***DAO***.
+- Cambiado el funcionamiento de las opciones del menú.
+- Cambiado el icono de los recordatorios y *Eliminar definitivamente*.
+- Uso de más cadenas desde *values/strings.xml* en vez de cadenas de texto explícitas.
+- Corregido un problema que impedía actualizar la vista de las notas al enviar una nota a archivo o a la papelera y viceversa.
+
+
