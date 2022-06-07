@@ -102,3 +102,4 @@
 ### Cambios menores
 
 - Mayor legibilidad en el código.
+- Corregido un problema al cambiar el tema de la aplicación que no se actualizaba el color de las notas.
