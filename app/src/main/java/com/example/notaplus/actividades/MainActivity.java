@@ -260,6 +260,16 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
                 switch (requestCode) {
                     case MOSTRAR_NOTAS:
                         listaNotas.clear();
+                        // Para cambiar el color predeterminado al cambiar el tema de la aplicación
+                        if (AppCompatDelegate.getDefaultNightMode() == AppCompatDelegate.MODE_NIGHT_YES) {
+                            for (Nota nota : notas) {
+                                if (nota.getColor().endsWith("D8D8D8")) nota.setColor("#373737");
+                            }
+                        } else {
+                            for (Nota nota : notas) {
+                                if (nota.getColor().endsWith("373737")) nota.setColor("#D8D8D8");
+                            }
+                        }
                         listaNotas.addAll(notas);
                         adaptadorNotas.notifyDataSetChanged();
                         break;

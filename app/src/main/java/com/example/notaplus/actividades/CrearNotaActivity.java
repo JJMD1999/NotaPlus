@@ -290,7 +290,7 @@ public class CrearNotaActivity extends AppCompatActivity {
 
         // Al clicar en un color (En este caso el predeterminado)
         plantilla_editar_nota.findViewById(R.id.view_color_predeterminado).setOnClickListener(v -> {
-            colorSeleccionado = getResources().getString(0 + R.color.fondo_nota); // Escoger el color predeterminado
+            colorSeleccionado = getResources().getString(0 + R.color.fondo_nota).toUpperCase(); // Escoger el color predeterminado
             imagenColorPredeterminado.setImageResource(R.drawable.ic_check);
             imagenColorAzul.setImageResource(0);
             imagenColorRojo.setImageResource(0);
