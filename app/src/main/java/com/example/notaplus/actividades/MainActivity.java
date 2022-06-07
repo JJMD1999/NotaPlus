@@ -42,6 +42,7 @@ import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.LinearLayout;
 import android.widget.SearchView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.notaplus.receiver.Notificacion;
@@ -92,6 +93,7 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
     private AlertDialog dialogoAñadirEnlace, dialogoRecordatorio;
     private Calendar calendario;
     private int posicion;
+    private TextView titulo;
 
     /**
      * Devuelve el tiempo actual en un formato específico
@@ -163,6 +165,7 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
      */
     private void asignarVariables() {
         contexto = getApplicationContext();
+        titulo = findViewById(R.id.tituloAplicacion);
         barraDeBusqueda = findViewById(R.id.barraDeBusqueda);
         añadirNota = findViewById(R.id.añadirNota);
         barraDeAcciones = findViewById(R.id.barraDeAcciones);
@@ -327,18 +330,21 @@ public class MainActivity extends AppCompatActivity implements ListenerNotas {
             switch (item.getItemId()) {
                 case R.id.menu_notas:
                     getNotas(MOSTRAR_NOTAS, false, 0);
+                    titulo.setText(R.string.mis_notas);
                     item.setChecked(true);
                     mostrarElementos(true);
                     return true;
 
                 case R.id.menu_archivo:
                     getNotas(MOSTRAR_NOTAS, false, 1);
+                    titulo.setText(R.string.archivo);
                     item.setChecked(true);
                     mostrarElementos(false);
                     return true;
 
                 case R.id.menu_papelera:
                     getNotas(MOSTRAR_NOTAS, false, 2);
+                    titulo.setText(R.string.papelera);
                     item.setChecked(true);
                     mostrarElementos(false);
                     return true;
